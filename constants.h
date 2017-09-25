@@ -14,12 +14,12 @@ private:
 public:
   static void reset_all();
 
-  static int get_alpha() { return alpha_ };
-  static int get_beta()  { return beta_  };
+  static int get_alpha() { return alpha_; }
+  static int get_beta()  { return beta_;  }
 
 
-  static void set_alpha(int alpha) { alpha_ = alpha };
-  static void set_beta(int beta)   { beta_  = beta  };
+  static void set_alpha(int alpha) { alpha_ = alpha; }
+  static void set_beta(int beta)   { beta_  = beta;  }
 
 };
 

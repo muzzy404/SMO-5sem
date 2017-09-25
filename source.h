@@ -7,7 +7,7 @@ class Source
 public:
   Source();
 
-  const int get_delta_time() const;
+  int get_delta_time() const;
 
 private:
   int current_time_;
