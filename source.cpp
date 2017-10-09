@@ -1,13 +1,13 @@
 #include "source.h"
-
 #include "constants.h"
 
-Source::Source()
-{
+//#include <cstdlib> for std::rand()
 
-}
+Source::Source(const long priority) :
+  priority_(priority), current_time_(0.0)
+{}
 
-int Source::get_delta_time() const
+double Source::delta_time() const
 {
   return 2;
 }

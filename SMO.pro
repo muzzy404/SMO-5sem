@@ -16,8 +16,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp \
     constants.cpp \
-    source.cpp
+    source.cpp \
+    request.cpp \
+    buffer.cpp \
+    counter.cpp
 
 HEADERS += \
     constants.h \
-    source.h
+    source.h \
+    request.h \
+    buffer.h \
+    counter.h
