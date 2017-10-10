@@ -43,6 +43,7 @@ void Buffer::print_reqs() const
 
 Buffer::Request_ptr Buffer::get()
 {
+  // if no requests in buffer
   if (occupied_ == 0)
   {
     return nullptr;
@@ -50,6 +51,7 @@ Buffer::Request_ptr Buffer::get()
 
   std::vector<Request_ptr> all_requests(occupied_);
 
+  // take all references to requests without nullptr
   std::copy_if(buffer_.begin(), buffer_.end(), all_requests.begin(),
               [](Request_ptr const & request)
               { return (request != nullptr); });
@@ -67,11 +69,9 @@ Buffer::Request_ptr Buffer::get()
 
                     // if sources of requests are the same
                     return left->get_number() < right->get_number();
-                    std::cout << "comp\n";
-                    return true;
                   });
 
-
+  // now find in buffer a place of min request to release place
   for(auto it = buffer_.begin(); it != buffer_.end(); ++it) {
     if (*it == *min) {
       *it = nullptr;
