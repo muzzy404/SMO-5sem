@@ -41,7 +41,7 @@ void Buffer::print_reqs() const
   }
 }
 
-Buffer::Request_ptr Buffer::get()
+/*Buffer::Request_ptr Buffer::get()
 {
   // if no requests in buffer
   if (occupied_ == 0)
@@ -80,5 +80,52 @@ Buffer::Request_ptr Buffer::get()
 
   --occupied_;
   return *min;
+}*/
+
+Buffer::Request_ptr Buffer::get()
+{
+  // if no requests in buffer
+  if (occupied_ == 0)
+  {
+    return nullptr;
+  }
+
+  // find first not empty place
+  int min;
+  for (int i = 0; ; ++i) {
+    if (buffer_[i] != nullptr) {
+      min = i;
+      break;
+    }
+  }
+
+  for(int i = (min + 1); i < buffer_.size(); ++i) {
+      if (buffer_[i] == nullptr) {
+        continue;
+      }
+
+      auto current_priority = buffer_[i]->get_priority();
+      auto min_priority     = buffer_[min]->get_priority();
+
+      // if priorities are not the same
+      if (current_priority < min_priority) {
+        min = i;
+        continue;
+      }
+
+      // if priorities are the same
+      if (current_priority == min_priority) {
+        if (buffer_[i]->get_number() < buffer_[min]->get_number()) {
+          min = i;
+        }
+      }
+
+  } // end of min search
+
+  Request_ptr request = buffer_[min];
+  buffer_[min] = nullptr;
+  --occupied_;
+
+  return request;
 }
 
