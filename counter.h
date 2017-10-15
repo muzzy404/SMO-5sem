@@ -15,15 +15,17 @@ public:
 
   unsigned size() const { return total_.size(); }
 
-  void add_request(index_t i)  { total_[i]    += 1; }
+  void add_request(index_t i)  { total_[i] += 1;    }
   void add_rejected(index_t i) { rejected_[i] += 1; }
+
   void add_service_time(index_t i, const time_t delta);
   void add_in_buffer_time(index_t i, const time_t delta);
   void add_in_system_time(index_t i, const time_t delta);
 
-  unsigned get_total()             const;
-  unsigned get_total(index_t i)    const { return total_[i];    }
-  unsigned get_rejected(index_t i) const { return rejected_[i]; }
+
+  unsigned total()            const;
+  unsigned total(index_t i)   const { return total_[i];    }
+  unsigned rejected(index_t i) const { return rejected_[i]; }
 
   double get_rejection_probability(index_t i) const;
   double get_waiting_dispersion(index_t i)    const;

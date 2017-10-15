@@ -30,11 +30,11 @@ void Counter::add_in_system_time(index_t i, const time_t delta)
   in_system_time_[i] += delta;
 }
 
-unsigned Counter::get_total() const
+unsigned Counter::total() const
 {
   unsigned total = 0;
-  for(unsigned num : total_)
-  {
+
+  for(unsigned num : total_) {
     total += num;
   }
   return total;
