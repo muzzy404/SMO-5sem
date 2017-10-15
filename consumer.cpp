@@ -1,5 +1,8 @@
 #include "consumer.h"
 #include "counter.h"
+#include "constants.h"
+
+#include <cmath>   // std::log()
 
 Consumer::Consumer(const unsigned priority, Counter_ptr counter) :
   Device(priority, counter)
@@ -25,6 +28,7 @@ void Consumer::process_request(Request::Request_ptr request)
 
 void Consumer::next_time_point()
 {
-  //TODO: gen function
-  current_time_ += 10.0;
+  // exponential
+  current_time_ += -(1.0 / Constants::get_lambda()) *
+                   std::log(1.0 - Constants::distribution());
 }

@@ -2,8 +2,6 @@
 #include "constants.h"
 #include "counter.h"
 
-//#include <cstdlib> for std::rand()
-
 Source::Source(const unsigned priority, Counter_ptr counter) :
   Device(priority, counter),
   requests_num_(0)
@@ -27,6 +25,8 @@ Request::Request_ptr Source::get_request()
 
 void Source::next_time_point()
 {
-  // TODO: gen time function
-  current_time_ += 5.0;
+  // equable
+  current_time_ += Constants::distribution() *
+                  (Constants::get_beta() - Constants::get_alpha())
+                                         + Constants::get_alpha();
 }
