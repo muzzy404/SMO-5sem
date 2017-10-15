@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <algorithm>
 
-#include <iostream>
+#include <iostream> // TODO: remove
 
 Buffer::Buffer(const unsigned size, Counter_ptr counter) :
   occupied_(0)
@@ -93,6 +93,9 @@ Buffer::Request_ptr Buffer::get()
   buffer_[min] = nullptr;
   --occupied_;
 
+  // TODO: remove debug msg
+  std::cout << "min: " << request->get_priority() << "."
+                       << request->get_number()   << "\n";
+
   return request;
 }
-

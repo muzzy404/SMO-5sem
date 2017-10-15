@@ -10,10 +10,12 @@ public:
   Consumer(const unsigned, Counter_ptr);
   Consumer(const unsigned, const double, Counter_ptr);
 
-  void process_request(Request::Request_ptr request);
+  void process_request(Request::Request_ptr & request);
+
+  void next_time_point();
 
 private:
-  void next_time_point();
+
 };
 
 #endif // CONSUMER_H

@@ -20,7 +20,8 @@ SOURCES += main.cpp \
     buffer.cpp \
     counter.cpp \
     consumer.cpp \
-    constants.cpp
+    constants.cpp \
+    smo.cpp
 
 HEADERS += \
     constants.h \
@@ -29,4 +30,5 @@ HEADERS += \
     buffer.h \
     counter.h \
     consumer.h \
-    device.h
+    device.h \
+    smo.h

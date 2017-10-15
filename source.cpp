@@ -2,6 +2,8 @@
 #include "constants.h"
 #include "counter.h"
 
+#include <iostream> // TODO: remove
+
 Source::Source(const unsigned priority, Counter_ptr counter) :
   Device(priority, counter),
   requests_num_(0)
@@ -14,6 +16,9 @@ Source::Source(const unsigned priority, const double time, Counter_ptr counter) 
 
 Request::Request_ptr Source::get_request()
 {
+  // TODO: remove
+  std::cout << "new request on " << priority_ << "\n";
+
   double creation_time = current_time_;
   next_time_point();
 
@@ -27,6 +32,8 @@ void Source::next_time_point()
 {
   // equable
   current_time_ += Constants::distribution() *
-                  (Constants::get_beta() - Constants::get_alpha())
-                                         + Constants::get_alpha();
+                  (Constants::beta() - Constants::alpha())
+                                     + Constants::alpha();
+  std::cout << "current time on " << priority_
+            << " source: "        << current_time_ << "\n";
 }

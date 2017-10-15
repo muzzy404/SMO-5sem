@@ -3,20 +3,22 @@
 // first, your own headers
 // next, other headers
 
-#include "request.h"
+/*#include "request.h"
 #include "buffer.h"
-#include "constants.h"
+#include "constants.h"*/
 
 //TODO: remove extra later
-#include <iostream>
+/*#include <iostream>
 #include <memory>
 #include <exception>
 #include <cstdlib>   // for random
 #include <ctime>     // for random
 #include <cmath>     // for log
-#include <algorithm> // sort
+#include <algorithm> // sort*/
 
-void test()
+#include "smo.h"
+
+/*void test()
 {
   std::shared_ptr<Counter> counter = std::make_shared<Counter>(5);
   Buffer buffer(counter->size(), counter);
@@ -67,9 +69,9 @@ void time_gen_test()
 
   for(int i = 0; i < 100; ++i) {
     double delta_eq  = Constants::distribution() *
-                      (Constants::get_beta() - Constants::get_alpha())
-                                             + Constants::get_alpha();
-    double delta_exp = -(1.0 / Constants::get_lambda()) *
+                      (Constants::beta() - Constants::alpha())
+                                         + Constants::alpha();
+    double delta_exp = -(1.0 / Constants::lambda()) *
                        std::log(1.0 - Constants::distribution());
 
     std::cout << i << ": " << delta_eq << ",  " << delta_exp << "\n";
@@ -82,14 +84,16 @@ void time_gen_test()
   for(double num : exp_vec) {
     std::cout << num << "\n";
   }
-}
+}*/
 
 int main(int argc, char *argv[])
 {
   QCoreApplication a(argc, argv);
 
-  test();
-  time_gen_test();
+  //test();
+  //time_gen_test();
+
+  SMO::main_loop();
 
   return a.exec();
 }

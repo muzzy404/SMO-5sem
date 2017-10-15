@@ -23,8 +23,8 @@ public:
   void add_in_system_time(index_t i, const time_t delta);
 
 
-  unsigned total()            const;
-  unsigned total(index_t i)   const { return total_[i];    }
+  unsigned total()             const;
+  unsigned total(index_t i)    const { return total_[i];    }
   unsigned rejected(index_t i) const { return rejected_[i]; }
 
   double get_rejection_probability(index_t i) const;

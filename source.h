@@ -12,9 +12,9 @@ public:
 
   Request::Request_ptr get_request();
 
-private:
   void next_time_point();
 
+private:
   unsigned requests_num_;
 };
 

@@ -27,9 +27,8 @@ public:
   unsigned get_priority()     const { return priority_;     }
   double   get_current_time() const { return current_time_; }
 
-protected:
   virtual void next_time_point() = 0;
-
+protected:
   const unsigned priority_;
   double         current_time_;
 
