@@ -26,6 +26,9 @@ public:
   unsigned get_rejected(index_t i) const { return rejected_[i]; }
 
   double get_rejection_probability(index_t i) const;
+  double get_waiting_dispersion(index_t i)    const;
+  double get_service_dispersion(index_t i)    const;
+
   time_t get_waiting_time(index_t i)          const;
   time_t get_service_time(index_t i)          const;
 
@@ -43,6 +46,8 @@ private:
   statistics_time in_buffer_time_;
   statistics_time in_system_time_;
 
+  statistics_time in_buffer_time_pow_;
+  statistics_time service_time_pow_;
 };
 
 #endif // COUNTER_H

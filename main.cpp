@@ -12,7 +12,7 @@
 
 void test()
 {
-  auto counter = std::make_shared<Counter>(5);
+  std::shared_ptr<Counter> counter = std::make_shared<Counter>(5);
   Buffer buffer(counter->size(), counter);
 
   buffer.add(std::make_shared<Request>(1, 4, 8.05));
