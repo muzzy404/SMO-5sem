@@ -8,17 +8,17 @@
 
 #include <iostream>
 #include <memory>
-
+#include <exception>
 
 void test()
 {
   Buffer buffer(5);
 
-  buffer.add(std::make_shared<Request>(1, 4, 55.05));
-  buffer.add(std::make_shared<Request>(3, 5, 56.05));
-  buffer.add(std::make_shared<Request>(3, 3, 55.05));
-  buffer.add(std::make_shared<Request>(3, 6, 55.05));
-  buffer.add(std::make_shared<Request>(3, 4, 55.05));
+  buffer.add(std::make_shared<Request>(1, 4, 8.05));
+  buffer.add(std::make_shared<Request>(1, 5, 9.15));
+  buffer.add(std::make_shared<Request>(1, 2, 3.05));
+  buffer.add(std::make_shared<Request>(1, 3, 6.05));
+  buffer.add(std::make_shared<Request>(1, 1, 1.05));
   buffer.add(std::make_shared<Request>(55, 66, 55.05));
 
   buffer.print_reqs();
@@ -33,8 +33,23 @@ void test()
 
   buffer.print_reqs();
 
-  std::cout << "\nend of test\n\n";
+  std::cout << "\n\nget 3 reqs\n\n";
 
+  buffer.get();
+  buffer.get();
+  buffer.get();
+
+  buffer.print_reqs();
+
+  std::cout << "\n\nget from empty buffer\n";
+
+  try {
+    buffer.get();
+  } catch (std::exception & e) {
+    std::cout << e.what() << "\n";
+  }
+
+  std::cout << "\nend of test\n\n";
 }
 
 

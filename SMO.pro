@@ -19,11 +19,14 @@ SOURCES += main.cpp \
     source.cpp \
     request.cpp \
     buffer.cpp \
-    counter.cpp
+    counter.cpp \
+    consumer.cpp
 
 HEADERS += \
     constants.h \
     source.h \
     request.h \
     buffer.h \
-    counter.h
+    counter.h \
+    consumer.h \
+    device.h

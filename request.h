@@ -1,10 +1,13 @@
 #ifndef REQUEST_H
 #define REQUEST_H
 
+#include <memory> // shared_ptr
 
 class Request
 {
 public:
+  typedef std::shared_ptr<Request> Request_ptr;
+
   Request(long priority, long number, double time);
   ~Request();
 
@@ -12,7 +15,6 @@ public:
   long get_number()   const { return number_;   }
 
   double get_creation_time() const { return creation_time_; }
-
 
 private:
   const long priority_;

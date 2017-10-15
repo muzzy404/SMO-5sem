@@ -28,6 +28,7 @@ void Buffer::add(const Request_ptr request)
 
   // all places are occupied
   Counter::add_to_rejected();
+  std::cout << "rejected " << request->get_priority() << "." << request->get_number() << "\n";
 }
 
 void Buffer::print_reqs() const
@@ -41,53 +42,13 @@ void Buffer::print_reqs() const
   }
 }
 
-/*Buffer::Request_ptr Buffer::get()
-{
-  // if no requests in buffer
-  if (occupied_ == 0)
-  {
-    return nullptr;
-  }
-
-  std::vector<Request_ptr> all_requests(occupied_);
-
-  // take all references to requests without nullptr
-  std::copy_if(buffer_.begin(), buffer_.end(), all_requests.begin(),
-              [](Request_ptr const & request)
-              { return (request != nullptr); });
-
-  auto min = std::min_element(all_requests.begin(), all_requests.end(),
-                  [] (Request_ptr const & left, Request_ptr const & right)
-                  {
-                    auto left_priority  = left->get_priority();
-                    auto right_priority = right->get_priority();
-
-                    // if sources of requests are not the same
-                    if (left_priority != right_priority) {
-                      return left_priority < right_priority;
-                    }
-
-                    // if sources of requests are the same
-                    return left->get_number() < right->get_number();
-                  });
-
-  // now find in buffer a place of min request to release place
-  for(auto it = buffer_.begin(); it != buffer_.end(); ++it) {
-    if (*it == *min) {
-      *it = nullptr;
-    }
-  }
-
-  --occupied_;
-  return *min;
-}*/
-
 Buffer::Request_ptr Buffer::get()
 {
   // if no requests in buffer
   if (occupied_ == 0)
   {
-    return nullptr;
+    throw std::logic_error("no requests in buffer");
+    //return nullptr;
   }
 
   // find first not empty place
@@ -99,25 +60,27 @@ Buffer::Request_ptr Buffer::get()
     }
   }
 
-  for(int i = (min + 1); i < buffer_.size(); ++i) {
+  auto min_priority = buffer_[min]->get_priority();
+  for(unsigned i = (min + 1); i < buffer_.size(); ++i) {
       if (buffer_[i] == nullptr) {
         continue;
       }
 
       auto current_priority = buffer_[i]->get_priority();
-      auto min_priority     = buffer_[min]->get_priority();
 
       // if priorities are not the same
       if (current_priority < min_priority) {
+        min_priority = current_priority;
         min = i;
         continue;
       }
 
       // if priorities are the same
       if (current_priority == min_priority) {
-        if (buffer_[i]->get_number() < buffer_[min]->get_number()) {
+        if (buffer_[i]->get_creation_time() < buffer_[min]->get_creation_time()) {
           min = i;
         }
+        //continue;
       }
 
   } // end of min search

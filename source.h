@@ -1,22 +1,21 @@
 #ifndef SOURCE_H
 #define SOURCE_H
 
+#include "device.h"
+#include "request.h"
 
-class Source
+class Source : public Device
 {
 public:
   Source(const long);
+  Source(const long, const double);
 
-  long get_priority() const { return priority_; }
-
-  double delta_time()       const;
-  double get_current_time() const { return current_time_; }
+  Request::Request_ptr get_request();
 
 private:
-  const long priority_;
+  void next_time_point();
 
-  double current_time_;
-
+  long requests_num_;
 };
 
 #endif // SOURCE_H

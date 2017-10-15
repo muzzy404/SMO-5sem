@@ -7,9 +7,7 @@ Request::Request(long priority, long number, double time) :
   priority_(priority),
   number_(number),
   creation_time_(time)
-{
-  Counter::add_to_total();
-}
+{}
 
 Request::~Request()
 {

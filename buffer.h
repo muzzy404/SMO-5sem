@@ -1,16 +1,14 @@
 #ifndef BUFFER_H
 #define BUFFER_H
 
-#include<request.h>
+#include <request.h>
 
 #include <vector>
-#include <memory> // shared_ptr
 
 class Buffer
 {
 public:
-  typedef std::shared_ptr<Request>       Request_ptr;
-  typedef std::shared_ptr<const Request> Request_ptr_const;
+  typedef Request::Request_ptr Request_ptr;
 
   Buffer(const int size);
 
