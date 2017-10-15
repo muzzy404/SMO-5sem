@@ -6,9 +6,13 @@
 
 #include <iostream>
 
-Buffer::Buffer(const int size) :
+Buffer::Buffer(const unsigned size, Counter_ptr counter) :
   occupied_(0)
 {
+  if (counter == nullptr) {
+    throw std::invalid_argument("counter must be not null");
+  }
+  counter_ = counter;
   buffer_ = std::vector<Request_ptr>(size, nullptr);
 }
 
@@ -27,7 +31,7 @@ void Buffer::add(const Request_ptr request)
   }
 
   // all places are occupied
-  Counter::add_to_rejected();
+  counter_->add_rejected(request->get_priority());
   std::cout << "rejected " << request->get_priority() << "." << request->get_number() << "\n";
 }
 

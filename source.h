@@ -7,15 +7,15 @@
 class Source : public Device
 {
 public:
-  Source(const long);
-  Source(const long, const double);
+  Source(const unsigned,Counter_ptr);
+  Source(const unsigned, const double, Counter_ptr counter);
 
   Request::Request_ptr get_request();
 
 private:
   void next_time_point();
 
-  long requests_num_;
+  unsigned requests_num_;
 };
 
 #endif // SOURCE_H

@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-Request::Request(long priority, long number, double time) :
+Request::Request(unsigned priority, unsigned number, double time) :
   priority_(priority),
   number_(number),
   creation_time_(time)

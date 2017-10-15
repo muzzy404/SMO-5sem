@@ -8,17 +8,17 @@ class Request
 public:
   typedef std::shared_ptr<Request> Request_ptr;
 
-  Request(long priority, long number, double time);
+  Request(unsigned priority, unsigned number, double time);
   ~Request();
 
-  long get_priority() const { return priority_; }
-  long get_number()   const { return number_;   }
+  unsigned get_priority() const { return priority_; }
+  unsigned get_number()   const { return number_;   }
 
   double get_creation_time() const { return creation_time_; }
 
 private:
-  const long priority_;
-  const long number_;
+  const unsigned priority_;
+  const unsigned number_;
 
   const double creation_time_;
 

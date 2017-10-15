@@ -7,14 +7,13 @@
 class Consumer : public Device
 {
 public:
-  Consumer(const long);
-  Consumer(const long, const double);
+  Consumer(const unsigned, Counter_ptr);
+  Consumer(const unsigned, const double, Counter_ptr);
 
   void process_request(Request::Request_ptr request);
 
 private:
   void next_time_point();
-
 };
 
 #endif // CONSUMER_H
