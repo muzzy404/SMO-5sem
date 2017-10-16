@@ -11,25 +11,25 @@ unsigned        min_time_index_ = 0;
 
 void SMO::main_loop()
 {
-  std::shared_ptr<Counter> counter = std::make_shared<Counter>(Constants::buffer());
+  Counter_ptr counter = std::make_shared<Counter>(Constants::buffer());
   Buffer buffer(counter->size(), counter);
 
   Sources   sources;
   Consumers consumers;
 
-  // create and generate first time point
+  // create
   for(unsigned i = 0; i < Constants::sources(); ++i) {
-    sources.push_back(* (new Source(i, counter)));
-    sources.at(i).next_time_point();
+    sources.push_back(* (new Source((i + 1), counter)));
   }
   for(unsigned i = 0; i < Constants::consumers(); ++i) {
-    consumers.push_back(* (new Consumer(i, counter)));
-    consumers.at(i).next_time_point();
+    consumers.push_back(* (new Consumer((i + 1), counter)));
   }
 
   bool stop = false;
 
+  // MAIN LOOP
   while(!stop) {
+    std::getchar();
     Min_time_t min_time = find_min_time(sources, consumers);
 
     switch (min_time.first) {
@@ -37,12 +37,20 @@ void SMO::main_loop()
       unsigned min = min_time.second;
 
       Request_ptr request = sources.at(min).get_request();
-      buffer.add(request);
+      try{
+        buffer.add(request);
+      } catch (std::exception & e) { // rejection
+        std::cout << "\n" << e.what() << "\n";
+      }
 
       // TODO: check this statment in manual
       // max number of requests on some source
       if (counter->total(min) == Constants::min_requests()) {
         stop = true;
+
+        std::cout << "~~~ LAST REQUEST ADDED TO BUFFER~~~\n\n";
+        print_calendar(sources, consumers, buffer, counter);
+        continue;
       }
       break;
     }
@@ -51,11 +59,10 @@ void SMO::main_loop()
       unsigned min = min_time.second;
 
       try{
-        std::cout << "GET\n";
         Request_ptr request = buffer.get();
         consumers.at(min).process_request(request);
-      } catch (std::exception & e) {
-        std::cout << e. what() << "\n";
+      } catch (std::exception & e) { // empty buffer
+        std::cout << "\n" << e. what() << "\n";
       }
       break;
     }
@@ -65,13 +72,23 @@ void SMO::main_loop()
       break;
     }
 
-    std::cout << "\nBUFFER\n";
-    buffer.print_reqs();
-    std::cout << "\n\n";
+    print_calendar(sources, consumers, buffer, counter);
   } // while end
 
-  std::cout << "REST IN BUFFER\n";
-  buffer.print_reqs();
+  // THIRD LOOP - REST REQUESTS
+  while (true) {
+    Request_ptr request;
+    try{
+      request = buffer.get();
+    } catch (std::exception & e) {
+    // buffer is empty
+      std::cout << "\n~~~ BUFFER IS EMPTY ~~~\n";
+      break;
+    }
+    // buffer is NOT empty
+    consumers.at(find_min_time(consumers)).process_request(request);
+    print_calendar(sources, consumers, buffer, counter);
+  }
 
 }
 
@@ -80,22 +97,70 @@ SMO::Min_time_t SMO::find_min_time(const Sources   & sources,
 {
   Time_group min_time_group = SOURCE;
   unsigned   min_time_index = 0;
-  double min_time = sources.at(min_time_index).get_current_time();
+  double     min_time       = sources.at(min_time_index).get_current_time();
 
   for(unsigned i = min_time_index + 1; i < sources.size(); ++i) {
-    if (sources.at(i).get_current_time() < min_time) {
+    double time = sources.at(i).get_current_time();
+    //std::cout << "source " + i << " - " << time << "\n";
+    if (time < min_time) {
       min_time_index = i;
       min_time = sources.at(i).get_current_time();
     }
   }
 
   for(unsigned i = 0; i < consumers.size(); ++i) {
-    if (consumers.at(i).get_current_time() < min_time) {
+    double time = consumers.at(i).get_current_time();
+    //std::cout << "consumer " + i << " - " << time << "\n";
+    if (time < min_time) {
       min_time_group = CONSUMER;
       min_time_index = i;
-      min_time = consumers.at(i).get_current_time();
+      min_time = time;
     }
   }
 
   return std::make_pair(min_time_group, min_time_index);
+}
+
+template < typename T >
+unsigned SMO::find_min_time(const std::vector<T> & devices)
+{
+  unsigned min_time_index = 0;
+  double   min_time       = devices.at(min_time_index).get_current_time();
+
+  for(unsigned i = min_time_index + 1; i < devices.size(); ++i) {
+    double time = devices.at(i).get_current_time();
+    if (time < min_time) {
+      min_time_index = i;
+      min_time = time;
+    }
+  }
+
+  return min_time_index;
+}
+
+void SMO::print_calendar(const Sources     & sources,
+                         const Consumers   & consumers,
+                         const Buffer      & buffer,
+                         const Counter_ptr & counter)
+{
+  std::cout << "--- BUFFER ---\n";
+  buffer.print_reqs();
+
+  std::cout << "\n--- SOURCES ---\n";
+  unsigned i = 0;
+  for(Source src : sources) {
+    std::cout << src.get_priority() << " - time: "
+              << src.get_current_time() << ", total: "
+              << counter->total(i)      << ", rejected: "
+              << counter->rejected(i)   << "\n";
+    i++;
+  }
+
+  std::cout << "\n--- CONSUMERS ---\n";
+  for(Consumer cnm : consumers) {
+    std::cout << cnm.get_priority() << " - time: "
+              << cnm.get_current_time() << "\n";
+  }
+
+  std::cout << "================================================\n\n";
 }

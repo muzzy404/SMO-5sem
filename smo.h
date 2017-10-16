@@ -4,6 +4,7 @@
 #include "source.h"
 #include "consumer.h"
 #include "request.h"
+#include "buffer.h"
 
 #include <utility> // std::pair
 #include <vector>
@@ -18,6 +19,7 @@ public:
   } Time_group;
 
   typedef std::pair<Time_group, unsigned> Min_time_t;
+  typedef std::shared_ptr<Counter>        Counter_ptr;
 
   static void main_loop();
 
@@ -28,6 +30,13 @@ private:
 
   static Min_time_t find_min_time(const Sources   & sources,
                                   const Consumers & consumers);
+  template < typename T >
+  static unsigned find_min_time(const std::vector<T> & devices);
+
+  static void print_calendar(const Sources     & sources,
+                             const Consumers   & consumers,
+                             const Buffer      & buffer,
+                             const Counter_ptr & counter);
 };
 
 #endif // SMO_H

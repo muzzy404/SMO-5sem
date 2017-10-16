@@ -3,6 +3,7 @@
 
 #include <stdexcept>
 #include <algorithm>
+#include <string>
 
 #include <iostream> // TODO: remove
 
@@ -31,18 +32,23 @@ void Buffer::add(const Request_ptr request)
   }
 
   // all places are occupied
-  counter_->add_rejected(request->get_priority());
-  std::cout << "rejected " << request->get_priority() << "." << request->get_number() << "\n";
+  unsigned priority = request->get_priority();
+  counter_->add_rejected(priority);
+  throw std::logic_error("rejection for " + std::to_string(priority));
 }
 
 void Buffer::print_reqs() const
 {
+  int i = 0;
   for(Request_ptr req : buffer_) {
+    std::cout << "[" << i << "] = ";
     if (req == nullptr) {
       std::cout << "null\n";
       continue;
     }
-    std::cout << req->get_priority() << "." << req->get_number() << "\n";
+    std::cout << req->get_priority()      << "."
+              << req->get_number()        << ", creation: "
+              << req->get_creation_time() << "\n";
   }
 }
 
@@ -92,10 +98,6 @@ Buffer::Request_ptr Buffer::get()
   Request_ptr request = buffer_[min];
   buffer_[min] = nullptr;
   --occupied_;
-
-  // TODO: remove debug msg
-  std::cout << "min: " << request->get_priority() << "."
-                       << request->get_number()   << "\n";
 
   return request;
 }

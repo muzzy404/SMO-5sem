@@ -16,7 +16,7 @@ Consumer::Consumer(const unsigned priority, const double time, Counter_ptr count
 void Consumer::process_request(Request::Request_ptr & request)
 {
   // TODO: remove
-  std::cout << "processing on " << priority_ << "\n";
+  std::cout << "CONSUMER: processing on " << priority_ << "\n\n";
 
   auto i = request->get_priority();
   auto entrance_time = current_time_;
@@ -35,6 +35,6 @@ void Consumer::next_time_point()
   // exponential
   current_time_ += -(1.0 / Constants::lambda()) *
                    std::log(1.0 - Constants::distribution());
-  std::cout << "current time on " << priority_
-            << " consumer: "      << current_time_ << "\n";
+  /*std::cout << "current time on " << priority_
+            << " consumer: "      << current_time_ << "\n";*/
 }

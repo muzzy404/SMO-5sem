@@ -11,7 +11,7 @@ private:
   static constexpr double   LAMBDA_DEFAULT       = 0.2;
   static constexpr unsigned SOURCES_DEFAULT      = 5;
   static constexpr unsigned CONSUMERS_DEFAULT    = 3;
-  static constexpr unsigned BUFFER_DEFAULT       = 5;
+  static constexpr unsigned BUFFER_DEFAULT       = 10;
   static constexpr unsigned MIN_REQUESTS_DEFAULT = 5;
 
   static double   alpha_;

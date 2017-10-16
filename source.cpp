@@ -17,7 +17,7 @@ Source::Source(const unsigned priority, const double time, Counter_ptr counter) 
 Request::Request_ptr Source::get_request()
 {
   // TODO: remove
-  std::cout << "new request on " << priority_ << "\n";
+  std::cout << "SOURCE: new request on " << priority_ << "\n\n";
 
   double creation_time = current_time_;
   next_time_point();
@@ -34,6 +34,6 @@ void Source::next_time_point()
   current_time_ += Constants::distribution() *
                   (Constants::beta() - Constants::alpha())
                                      + Constants::alpha();
-  std::cout << "current time on " << priority_
-            << " source: "        << current_time_ << "\n";
+  /*std::cout << "current time on " << priority_
+            << " source: "        << current_time_ << "\n";*/
 }
