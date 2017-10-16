@@ -2,7 +2,6 @@
 #include "counter.h"
 
 #include <stdexcept>
-#include <algorithm>
 #include <string>
 
 #include <iostream> // TODO: remove

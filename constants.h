@@ -32,10 +32,10 @@ private:
   static constexpr double   ALPHA_DEFAULT        = 1.0;
   static constexpr double   BETA_DEFAULT         = 3.0;
   static constexpr double   LAMBDA_DEFAULT       = 0.2;
-  static constexpr unsigned SOURCES_DEFAULT      = 5;
-  static constexpr unsigned CONSUMERS_DEFAULT    = 7;
+  static constexpr unsigned SOURCES_DEFAULT      = 10;
+  static constexpr unsigned CONSUMERS_DEFAULT    = 8;
   static constexpr unsigned BUFFER_DEFAULT       = 5;
-  static constexpr unsigned MIN_REQUESTS_DEFAULT = 100;
+  static constexpr unsigned MIN_REQUESTS_DEFAULT = 50;
   //static constexpr bool
 
   static double   alpha_;

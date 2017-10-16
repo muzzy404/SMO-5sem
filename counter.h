@@ -2,7 +2,7 @@
 #define COUNTER_H
 
 #include <vector>
-#include <memory>
+#include <memory>  // std::chared_ptr
 
 class Counter
 {
@@ -11,7 +11,7 @@ public:
   typedef double                   time_t;
   typedef std::shared_ptr<Counter> Counter_ptr;
 
-  Counter(index_t size);
+  Counter(index_t sources_num);
 
   unsigned size() const { return total_.size(); }
 
@@ -21,8 +21,6 @@ public:
   void add_service_time(index_t i, const time_t delta);
   void add_in_buffer_time(index_t i, const time_t delta);
   void add_in_system_time(index_t i, const time_t delta);
-
-  void set_realisation_time(const time_t time) { realisation_time_ = time; }
 
   unsigned total()             const;
   unsigned total(index_t i)    const { return total_[i];    }
@@ -36,13 +34,12 @@ public:
   time_t get_service_time(index_t i)   const;
   time_t get_in_system_time(index_t i) const;
 
-  time_t count_device_coeff(const time_t device_time) const;
+  time_t count_device_coeff(const time_t device_time,
+                            const time_t realisation_time) const;
 
 private:
   typedef std::vector<unsigned> statistics_num;
   typedef std::vector<double>   statistics_time;
-
-  time_t realisation_time_;
 
   statistics_num total_;
   statistics_num rejected_;

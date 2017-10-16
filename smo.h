@@ -1,9 +1,9 @@
 #ifndef SMO_H
 #define SMO_H
 
+#include "request.h"
 #include "source.h"
 #include "consumer.h"
-#include "request.h"
 #include "buffer.h"
 
 #include <utility> // std::pair
@@ -15,7 +15,6 @@ public:
   typedef enum {
     SOURCE,
     CONSUMER,
-    UNDEFINED,
   } Time_group;
 
   typedef std::pair<Time_group, unsigned> Min_time_t;

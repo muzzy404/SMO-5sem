@@ -11,13 +11,12 @@ public:
   Consumer(const unsigned, const double, Counter_ptr);
 
   void process_request(Request::Request_ptr & request);
-
   void next_time_point() override;
 
-  void set_current_time(const double time);
+  void set_current_time(const double time) { current_time_ = time; }
 
 private:
-  bool worked_;
+
 };
 
 #endif // CONSUMER_H

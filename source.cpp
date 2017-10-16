@@ -1,6 +1,5 @@
 #include "source.h"
 #include "constants.h"
-#include "counter.h"
 
 #include <iostream> // TODO: remove
 
@@ -16,12 +15,10 @@ Source::Source(const unsigned priority, const double time, Counter_ptr counter) 
 
 Request::Request_ptr Source::get_request()
 {
-  // TODO: remove
+  // TODO: remove ?
   std::cout << "SOURCE: new request on " << priority_;
   std::cout << " - request " << priority_ <<
                          "." << (requests_num_ + 1) << "\n\n";
-
-  counter_->set_realisation_time(current_time_);
 
   double creation_time = current_time_;
   next_time_point();
@@ -38,6 +35,4 @@ void Source::next_time_point()
   current_time_ += Constants::distribution() *
                   (Constants::beta() - Constants::alpha())
                                      + Constants::alpha();
-  /*std::cout << "current time on " << priority_
-            << " source: "        << current_time_ << "\n";*/
 }

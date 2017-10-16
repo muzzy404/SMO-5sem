@@ -1,36 +1,36 @@
 #include "consumer.h"
-#include "counter.h"
 #include "constants.h"
 
 #include <cmath>    // std::log()
 #include <iostream> // TODO: remove
 
 Consumer::Consumer(const unsigned priority, Counter_ptr counter) :
-  Device(priority, counter),
-  worked_(false)
+  Device(priority, counter)
 {}
 
 Consumer::Consumer(const unsigned priority, const double time, Counter_ptr counter) :
-  Device(priority, time, counter),
-  worked_(false)
+  Device(priority, time, counter)
 {}
 
 void Consumer::process_request(Request::Request_ptr & request)
 {
-  // TODO: remove
+  // TODO: remove ?
   std::cout << "CONSUMER: processing on " << priority_;
   std::cout << " - request " << request->get_priority() <<
                          "." << request->get_number()   << "\n\n";
 
-  if (!worked_)
+  if (request->get_creation_time() > current_time_)
   {
+    // if consumer was waiting for request
     current_time_ = request->get_creation_time();
-    worked_ = true;
   }
 
-  auto i = request->get_priority();
-  auto entrance_time = current_time_;
-  auto creation_time = request->get_creation_time();
+  unsigned i = request->get_priority();
+
+  double entrance_time = current_time_;
+  double creation_time = request->get_creation_time();
+
+  std::cout << "WAITING = " << (current_time_ - creation_time) << "\n";
 
   counter_->add_in_buffer_time(i, current_time_ - creation_time);
 
@@ -45,11 +45,5 @@ void Consumer::next_time_point()
   // exponential
   current_time_ += -(1.0 / Constants::lambda()) *
                    std::log(1.0 - Constants::distribution());
-  /*std::cout << "current time on " << priority_
-            << " consumer: "      << current_time_ << "\n";*/
 }
 
-void Consumer::set_current_time(const double time)
-{
-  current_time_ = time;
-}
