@@ -31,6 +31,8 @@ void SMO::main_loop()
   // MAIN LOOP
   while(!stop) {
     std::getchar();
+    print_calendar(sources, consumers, buffer, counter);
+
     Min_time_t min_time = find_min_time(sources, consumers);
 
     switch (min_time.first) {
@@ -42,27 +44,15 @@ void SMO::main_loop()
         buffer.add(request);
       } catch (std::exception & e) {
         // rejection
-        unsigned t = find_min_time(consumers);
-        if (consumers.at(t).get_current_time() < 0.0) {
-            // get for processing and add again
-            Request_ptr request_to_consumer = buffer.get();
-            buffer.add(request);
 
-            consumers.at(t).set_current_time(request_to_consumer->get_creation_time());
-            consumers.at(t).process_request(request);
-        } else {
-          std::cout << e.what() << "\n";
-        }
+        std::cout << e.what() << "\n";
       }
 
-      // TODO: check this statment in manual
       // max number of requests on some source
-      if (counter->total(min) == Constants::min_requests()) {
+      if (counter->total() == Constants::min_requests()) {
         stop = true;
 
         std::cout << "~~~ LAST REQUEST ADDED TO BUFFER~~~\n\n";
-        print_calendar(sources, consumers, buffer, counter);
-        continue;
       }
       break;
     }
@@ -73,8 +63,11 @@ void SMO::main_loop()
       try{
         Request_ptr request = buffer.get();
         consumers.at(min).process_request(request);
-      } catch (std::exception & e) { // empty buffer
-        std::cout << "\nBUFFER: " << e. what() << "\n";
+      } catch (std::exception & e) {
+        // empty buffer
+
+        min = find_min_time(sources);
+        buffer.add(sources.at(min).get_request());
       }
       break;
     }
@@ -84,11 +77,14 @@ void SMO::main_loop()
       break;
     }
 
-    print_calendar(sources, consumers, buffer, counter);
+    //print_calendar(sources, consumers, buffer, counter);
   } // while end
 
   // THIRD LOOP - REST REQUESTS
   while (true) {
+    std::getchar();
+    print_calendar(sources, consumers, buffer, counter);
+
     Request_ptr request;
     try{
       request = buffer.get();
@@ -99,7 +95,8 @@ void SMO::main_loop()
     }
     // buffer is NOT empty
     consumers.at(find_min_time(consumers)).process_request(request);
-    print_calendar(sources, consumers, buffer, counter);
+
+    //print_calendar(sources, consumers, buffer, counter);
   }
 
   std::cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n";
@@ -125,7 +122,7 @@ SMO::Min_time_t SMO::find_min_time(const Sources   & sources,
   for(unsigned i = 0; i < consumers.size(); ++i) {
     double time = consumers.at(i).get_current_time();
     //std::cout << "consumer " + i << " - " << time << "\n";
-    if (time < min_time && time > 0.0) {
+    if (time < min_time) {
       min_time_group = CONSUMER;
       min_time_index = i;
       min_time = time;
@@ -176,6 +173,8 @@ void SMO::print_calendar(const Sources     & sources,
               << cnm.get_current_time() << "\n";
   }
 
+  std::cout << "\nTOTAL: " << counter->total()
+            << "/"         << Constants::min_requests() << "\n";
   std::cout << "================================================\n\n";
 }
 

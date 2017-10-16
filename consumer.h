@@ -17,7 +17,7 @@ public:
   void set_current_time(const double time);
 
 private:
-
+  bool worked_;
 };
 
 #endif // CONSUMER_H

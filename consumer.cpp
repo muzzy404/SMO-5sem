@@ -6,11 +6,13 @@
 #include <iostream> // TODO: remove
 
 Consumer::Consumer(const unsigned priority, Counter_ptr counter) :
-  Device(priority, -1.0, counter)
+  Device(priority, counter),
+  worked_(false)
 {}
 
 Consumer::Consumer(const unsigned priority, const double time, Counter_ptr counter) :
-  Device(priority, time, counter)
+  Device(priority, time, counter),
+  worked_(false)
 {}
 
 void Consumer::process_request(Request::Request_ptr & request)
@@ -19,6 +21,12 @@ void Consumer::process_request(Request::Request_ptr & request)
   std::cout << "CONSUMER: processing on " << priority_;
   std::cout << " - request " << request->get_priority() <<
                          "." << request->get_number()   << "\n\n";
+
+  if (!worked_)
+  {
+    current_time_ = request->get_creation_time();
+    worked_ = true;
+  }
 
   auto i = request->get_priority();
   auto entrance_time = current_time_;

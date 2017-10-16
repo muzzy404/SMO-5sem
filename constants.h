@@ -36,6 +36,7 @@ private:
   static constexpr unsigned CONSUMERS_DEFAULT    = 7;
   static constexpr unsigned BUFFER_DEFAULT       = 5;
   static constexpr unsigned MIN_REQUESTS_DEFAULT = 100;
+  //static constexpr bool
 
   static double   alpha_;
   static double   beta_;
