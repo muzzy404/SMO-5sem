@@ -14,6 +14,8 @@ public:
 
   void next_time_point() override;
 
+  void set_current_time(const double time);
+
 private:
 
 };

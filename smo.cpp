@@ -20,6 +20,7 @@ void SMO::main_loop()
   // create
   for(unsigned i = 0; i < Constants::sources(); ++i) {
     sources.push_back(* (new Source(i, counter)));
+    sources.at(i).next_time_point();
   }
   for(unsigned i = 0; i < Constants::consumers(); ++i) {
     consumers.push_back(* (new Consumer(i, counter)));
@@ -29,7 +30,7 @@ void SMO::main_loop()
 
   // MAIN LOOP
   while(!stop) {
-    //std::getchar();
+    std::getchar();
     Min_time_t min_time = find_min_time(sources, consumers);
 
     switch (min_time.first) {
@@ -39,8 +40,19 @@ void SMO::main_loop()
       Request_ptr request = sources.at(min).get_request();
       try{
         buffer.add(request);
-      } catch (std::exception & e) { // rejection
-        std::cout << e.what() << "\n";
+      } catch (std::exception & e) {
+        // rejection
+        unsigned t = find_min_time(consumers);
+        if (consumers.at(t).get_current_time() < 0.0) {
+            // get for processing and add again
+            Request_ptr request_to_consumer = buffer.get();
+            buffer.add(request);
+
+            consumers.at(t).set_current_time(request_to_consumer->get_creation_time());
+            consumers.at(t).process_request(request);
+        } else {
+          std::cout << e.what() << "\n";
+        }
       }
 
       // TODO: check this statment in manual
@@ -62,7 +74,7 @@ void SMO::main_loop()
         Request_ptr request = buffer.get();
         consumers.at(min).process_request(request);
       } catch (std::exception & e) { // empty buffer
-        std::cout << "\n" << e. what() << "\n";
+        std::cout << "\nBUFFER: " << e. what() << "\n";
       }
       break;
     }
@@ -113,7 +125,7 @@ SMO::Min_time_t SMO::find_min_time(const Sources   & sources,
   for(unsigned i = 0; i < consumers.size(); ++i) {
     double time = consumers.at(i).get_current_time();
     //std::cout << "consumer " + i << " - " << time << "\n";
-    if (time < min_time) {
+    if (time < min_time && time > 0.0) {
       min_time_group = CONSUMER;
       min_time_index = i;
       min_time = time;
@@ -145,10 +157,7 @@ void SMO::print_calendar(const Sources     & sources,
                          const Buffer      & buffer,
                          const Counter_ptr & counter)
 {
-  std::cout << "--- BUFFER ---\n";
-  buffer.print_reqs();
-
-  std::cout << "\n--- SOURCES ---\n";
+  std::cout << "--- SOURCES ---\n";
   unsigned i = 0;
   for(Source src : sources) {
     std::cout << src.get_priority() << " - time: "
@@ -157,6 +166,9 @@ void SMO::print_calendar(const Sources     & sources,
               << counter->rejected(i)   << "\n";
     i++;
   }
+
+  std::cout << "\n--- BUFFER ---\n";
+  buffer.print_reqs();
 
   std::cout << "\n--- CONSUMERS ---\n";
   for(Consumer cnm : consumers) {
