@@ -19,17 +19,17 @@ void SMO::main_loop()
 
   // create
   for(unsigned i = 0; i < Constants::sources(); ++i) {
-    sources.push_back(* (new Source((i + 1), counter)));
+    sources.push_back(* (new Source(i, counter)));
   }
   for(unsigned i = 0; i < Constants::consumers(); ++i) {
-    consumers.push_back(* (new Consumer((i + 1), counter)));
+    consumers.push_back(* (new Consumer(i, counter)));
   }
 
   bool stop = false;
 
   // MAIN LOOP
   while(!stop) {
-    std::getchar();
+    //std::getchar();
     Min_time_t min_time = find_min_time(sources, consumers);
 
     switch (min_time.first) {
@@ -40,7 +40,7 @@ void SMO::main_loop()
       try{
         buffer.add(request);
       } catch (std::exception & e) { // rejection
-        std::cout << "\n" << e.what() << "\n";
+        std::cout << e.what() << "\n";
       }
 
       // TODO: check this statment in manual
@@ -90,6 +90,8 @@ void SMO::main_loop()
     print_calendar(sources, consumers, buffer, counter);
   }
 
+  std::cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n";
+  print_result_table(sources, consumers, counter);
 }
 
 SMO::Min_time_t SMO::find_min_time(const Sources   & sources,
@@ -162,5 +164,33 @@ void SMO::print_calendar(const Sources     & sources,
               << cnm.get_current_time() << "\n";
   }
 
+  std::cout << "================================================\n\n";
+}
+
+void SMO::print_result_table(const Sources     & sources,
+                             const Consumers   & consumers,
+                             const Counter_ptr & counter)
+{
+  unsigned i = 0;
+  for(Source src : sources) {
+    std::cout << "SOURCE "    << src.get_priority();
+    std::cout << "\n  total       : " << counter->total(i);
+    std::cout << "\n  rejected    : " << counter->rejected(i);
+    std::cout << "\n  P[rejection]: " << counter->get_rejection_probability(i) << "%";
+    std::cout << "\n  T[in system]: " << counter->get_in_system_time(i);
+    std::cout << "\n  T[waiting]  : " << counter->get_waiting_time(i);
+    std::cout << "\n  T[service]  : " << counter->get_service_time(i);
+    std::cout << "\n  D[waiting]  : " << counter->get_waiting_dispersion(i);
+    std::cout << "\n  D[service]  : " << counter->get_service_dispersion(i) << "\n\n";
+    ++i;
+  }
+  std::cout << "================================================\n\n";
+
+  for(Consumer cnm : consumers) {
+    std::cout << "CONSUMER " << cnm.get_priority();
+    std::cout << "\n  coefficient: "
+              << counter->count_device_coeff(cnm.get_current_time()) << "\n";
+
+  }
   std::cout << "================================================\n\n";
 }

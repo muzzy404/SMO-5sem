@@ -37,6 +37,9 @@ private:
                              const Consumers   & consumers,
                              const Buffer      & buffer,
                              const Counter_ptr & counter);
+  static void print_result_table(const Sources     & sources,
+                                 const Consumers   & consumers,
+                                 const Counter_ptr & counter);
 };
 
 #endif // SMO_H

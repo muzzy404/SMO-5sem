@@ -18,6 +18,7 @@ Request::Request_ptr Source::get_request()
 {
   // TODO: remove
   std::cout << "SOURCE: new request on " << priority_ << "\n\n";
+  counter_->set_realisation_time(current_time_);
 
   double creation_time = current_time_;
   next_time_point();

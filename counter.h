@@ -22,6 +22,7 @@ public:
   void add_in_buffer_time(index_t i, const time_t delta);
   void add_in_system_time(index_t i, const time_t delta);
 
+  void set_realisation_time(const time_t time) { realisation_time_ = time; }
 
   unsigned total()             const;
   unsigned total(index_t i)    const { return total_[i];    }
@@ -31,15 +32,17 @@ public:
   double get_waiting_dispersion(index_t i)    const;
   double get_service_dispersion(index_t i)    const;
 
-  time_t get_waiting_time(index_t i)          const;
-  time_t get_service_time(index_t i)          const;
+  time_t get_waiting_time(index_t i)   const;
+  time_t get_service_time(index_t i)   const;
+  time_t get_in_system_time(index_t i) const;
 
-  time_t count_device_coeff(const time_t device_time,
-                            const time_t total_time) const;
+  time_t count_device_coeff(const time_t device_time) const;
 
 private:
   typedef std::vector<unsigned> statistics_num;
   typedef std::vector<double>   statistics_time;
+
+  time_t realisation_time_;
 
   statistics_num total_;
   statistics_num rejected_;

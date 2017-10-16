@@ -12,7 +12,7 @@ public:
 
   void process_request(Request::Request_ptr & request);
 
-  void next_time_point();
+  void next_time_point() override;
 
 private:
 

@@ -16,13 +16,13 @@ Counter::Counter(index_t size)
 void Counter::add_service_time(index_t i, const time_t delta)
 {
   service_time_[i]     += delta;
-  service_time_pow_[i] += delta * delta;
+  service_time_pow_[i] += (delta * delta);
 }
 
 void Counter::add_in_buffer_time(index_t i, const time_t delta)
 {
   in_buffer_time_[i]     += delta;
-  in_buffer_time_pow_[i] += delta * delta;
+  in_buffer_time_pow_[i] += (delta * delta);
 }
 
 void Counter::add_in_system_time(index_t i, const time_t delta)
@@ -42,7 +42,7 @@ unsigned Counter::total() const
 
 double Counter::get_rejection_probability(index_t i) const
 {
-  return (rejected_[i] / total_[i]);
+  return 100 * ((double)rejected_[i] / total_[i]);
 }
 
 double Counter::get_waiting_dispersion(index_t i) const
@@ -69,8 +69,12 @@ Counter::time_t Counter::get_service_time(index_t i) const
   return (service_time_[i] / total_[i]);
 }
 
-Counter::time_t Counter::count_device_coeff(const time_t device_time,
-                                            const time_t total_time) const
+Counter::time_t Counter::get_in_system_time(index_t i) const
 {
-  return (device_time / total_time);
+  return (in_system_time_[i] / total_[i]);
+}
+
+Counter::time_t Counter::count_device_coeff(const time_t device_time) const
+{
+  return (device_time / realisation_time_);
 }
