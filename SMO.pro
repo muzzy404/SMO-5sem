@@ -1,4 +1,5 @@
 QT -= gui
+QT += widgets
 
 CONFIG += c++11 console
 CONFIG -= app_bundle
@@ -21,7 +22,8 @@ SOURCES += main.cpp \
     counter.cpp \
     consumer.cpp \
     constants.cpp \
-    smo.cpp
+    smo.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     constants.h \
@@ -31,4 +33,8 @@ HEADERS += \
     counter.h \
     consumer.h \
     device.h \
-    smo.h
+    smo.h \
+    mainwindow.h
+
+FORMS += \
+    mainwindow.ui
