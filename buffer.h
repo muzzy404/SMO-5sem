@@ -24,6 +24,8 @@ public:
 
   state_t get_state() const;
 
+  unsigned size() const { return buffer_.size(); }
+
 private:
   std::vector<Request_ptr> buffer_;
 

@@ -221,3 +221,17 @@ std::vector<double> System::get_devices_coeff() const
 
   return coefficients;
 }
+
+int System::get_progress() const
+{
+  int total = counter_->total();
+  int max   = Constants::min_requests();
+
+  int progress = total / max;
+
+  if ((progress == 100) && !finished_) {
+    return (progress - 100);
+  }
+
+  return progress;
+}

@@ -32,6 +32,12 @@ public:
   Counter::Counter_ptr get_counter() const { return counter_; }
   std::vector<double>  get_devices_coeff() const;
 
+  unsigned get_sources_num()   const { return sources_.size();   }
+  unsigned get_buffer_size()   const { return buffer_->size();   }
+  unsigned get_consumers_num() const { return consumers_.size(); }
+
+  int get_progress() const;
+
 private:
   typedef std::vector<Source>   Sources;
   typedef std::vector<Consumer> Consumers;

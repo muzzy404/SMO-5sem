@@ -2,7 +2,8 @@
 //#include "mainwindow.h"
 #include "stepbystepwindow.h"
 
-#include <cstdio> // getchar()
+//#include <cstdio> // getchar()
+#include <memory>   // shared_ptr
 
 //#include <QCoreApplication>
 #include <QApplication>
@@ -31,7 +32,9 @@ int main(int argc, char *argv[])
   /*MainWindow w;
   w.show();*/
 
-  StepByStepWindow w(10, 25, 8);
+  auto smo = std::make_shared<System>();
+
+  StepByStepWindow w(smo);
   w.show();
 
   return a.exec();
