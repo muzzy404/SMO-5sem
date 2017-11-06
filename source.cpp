@@ -22,9 +22,9 @@ Request::Request_ptr Source::get_request()
   return std::make_shared<Request>(priority_,
                                    ++requests_num_,
                                    creation_time);
-  last_generated_ = (std::to_string(priority_) +
-                     "." +
-                     std::to_string(requests_num_));
+  last_request_ = (std::to_string(priority_) +
+                   "." +
+                   std::to_string(requests_num_));
 }
 
 void Source::next_time_point()
@@ -33,10 +33,4 @@ void Source::next_time_point()
   current_time_ += Constants::distribution() *
                   (Constants::beta() - Constants::alpha())
                                      + Constants::alpha();
-}
-
-Device::state_t Source::get_state() const
-{
-  return std::make_pair(std::to_string(this->current_time_),
-                        last_generated_);
 }

@@ -16,11 +16,8 @@ public:
 
   void next_time_point() override;
 
-  Device::state_t get_state() const override;
-
 private:
-  unsigned    requests_num_;
-  std::string last_generated_;
+  unsigned requests_num_;
 };
 
 #endif // SOURCE_H

@@ -18,10 +18,8 @@ public:
 
   void next_time_point() override;
 
-  Device::state_t get_state() const override;
-
 private:
-  std::string last_processed_;
+
 };
 
 #endif // CONSUMER_H

@@ -1,4 +1,3 @@
-QT -= gui
 QT += widgets
 
 CONFIG += c++14 console
