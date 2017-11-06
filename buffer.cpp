@@ -36,20 +36,6 @@ void Buffer::add(const Request_ptr request)
   throw std::logic_error("rejection for " + std::to_string(priority));
 }
 
-void Buffer::print_reqs() const
-{
-  int i = 0;
-  for(Request_ptr req : buffer_) {
-    std::cout << "[" << i << "] = ";
-    if (req == nullptr) {
-      std::cout << "null\n";
-      continue;
-    }
-    std::cout << req->get_priority()      << "."
-              << req->get_number()        << ", creation: "
-              << req->get_creation_time() << "\n";
-  }
-}
 
 Buffer::Request_ptr Buffer::get()
 {
@@ -99,4 +85,33 @@ Buffer::Request_ptr Buffer::get()
   --occupied_;
 
   return request;
+}
+
+void Buffer::print_reqs() const
+{
+  int i = 0;
+  for(Request_ptr req : buffer_) {
+    std::cout << "[" << i++ << "] = ";
+    if (req == nullptr) {
+      std::cout << "null\n";
+      continue;
+    }
+    std::cout << req->get_priority()      << "."
+              << req->get_number()        << ", creation: "
+              << req->get_creation_time() << "\n";
+  }
+}
+
+std::vector<std::string> Buffer::get_state() const
+{
+  std::vector<std::string> state;
+
+  for(Request_ptr req : buffer_) {
+    auto src = std::to_string(req->get_priority());
+    auto num = std::to_string(req->get_number());
+
+    state.push_back(src + "." + num);
+  }
+
+  return state;
 }

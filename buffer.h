@@ -5,6 +5,7 @@
 #include "counter.h"
 
 #include <vector>
+#include <string>
 
 class Buffer
 {
@@ -18,6 +19,8 @@ public:
   Request_ptr get();
 
   void print_reqs() const;
+
+  std::vector<std::string> get_state() const;
 
 private:
   std::vector<Request_ptr> buffer_;

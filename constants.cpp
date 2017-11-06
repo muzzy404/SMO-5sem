@@ -4,10 +4,11 @@ double Constants::alpha_  = Constants::ALPHA_DEFAULT;
 double Constants::beta_   = Constants::BETA_DEFAULT;
 double Constants::lambda_ = Constants::LAMBDA_DEFAULT;
 
-unsigned Constants::sources_      = Constants::SOURCES_DEFAULT;
-unsigned Constants::consumers_    = Constants::CONSUMERS_DEFAULT;
-unsigned Constants::buffer_       = Constants::BUFFER_DEFAULT;
-unsigned Constants::min_requests_ = Constants::MIN_REQUESTS_DEFAULT;
+unsigned Constants::sources_       = Constants::SOURCES_DEFAULT;
+unsigned Constants::consumers_     = Constants::CONSUMERS_DEFAULT;
+unsigned Constants::buffer_        = Constants::BUFFER_DEFAULT;
+unsigned Constants::min_requests_  = Constants::MIN_REQUESTS_DEFAULT;
+bool Constants::step_by_step_mode_ = Constants::STEP_BY_STEP_MODE_DEFAULT;
 
 void Constants::reset_all() {
   alpha_        = ALPHA_DEFAULT;
@@ -17,5 +18,6 @@ void Constants::reset_all() {
   consumers_    = CONSUMERS_DEFAULT;
   buffer_       = BUFFER_DEFAULT;
   min_requests_ = MIN_REQUESTS_DEFAULT;
+  step_by_step_mode_ = STEP_BY_STEP_MODE_DEFAULT;
 }
 

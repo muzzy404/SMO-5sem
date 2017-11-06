@@ -1,13 +1,27 @@
+#include "system.h"
+//#include "mainwindow.h"
+
+#include <cstdio> // getchar()
+
 #include <QCoreApplication>
 //#include <QApplication>
-
-#include "smo.h"
-#include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
   QCoreApplication a(argc, argv);
-  SMO::main_loop();
+  //SMO::main_loop();
+
+  System smo;
+  smo.print_calendar();
+
+  while (!smo.finished()) {
+    std::getchar();
+    smo.next_iteration();
+    smo.print_calendar();
+  }
+
+  std::getchar();
+  smo.print_result_table();
 
   /*QApplication a(argc, argv);
 

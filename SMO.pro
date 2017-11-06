@@ -1,7 +1,7 @@
 QT -= gui
 QT += widgets
 
-CONFIG += c++11 console
+CONFIG += c++14 console
 CONFIG -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -22,8 +22,8 @@ SOURCES += main.cpp \
     counter.cpp \
     consumer.cpp \
     constants.cpp \
-    smo.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    system.cpp
 
 HEADERS += \
     constants.h \
@@ -33,8 +33,8 @@ HEADERS += \
     counter.h \
     consumer.h \
     device.h \
-    smo.h \
-    mainwindow.h
+    mainwindow.h \
+    system.h
 
 FORMS += \
     mainwindow.ui

@@ -4,6 +4,8 @@
 #include "device.h"
 #include "request.h"
 
+#include <string>
+
 class Consumer : public Device
 {
 public:
@@ -11,12 +13,15 @@ public:
   Consumer(const unsigned, const double, Counter_ptr);
 
   void process_request(Request::Request_ptr & request);
-  void next_time_point() override;
 
   void set_current_time(const double time) { current_time_ = time; }
 
-private:
+  void next_time_point() override;
 
+  Device::state_t get_state() const override;
+
+private:
+  std::string last_processed_;
 };
 
 #endif // CONSUMER_H

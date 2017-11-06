@@ -10,6 +10,6 @@ Request::Request(unsigned priority, unsigned number, double time) :
 
 Request::~Request()
 {
-  std::cout << "deletion of " << this->get_priority() <<
-                          "." << this->get_number()   << "\n";
+  //std::cout << "deletion of " << this->get_priority() <<
+  //                        "." << this->get_number()   << "\n";
 }
