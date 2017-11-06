@@ -21,6 +21,9 @@ System::System()
   for(unsigned i = 0; i <consumers_num; ++i) {
     consumers_.push_back(*(new Consumer(i, counter_)));
   }
+
+  min_requests_      = Constants::min_requests();
+  step_by_step_mode_ = Constants::step_by_step_mode();
 }
 
 void System::next_iteration()
@@ -66,7 +69,7 @@ void System::next_iteration()
       } catch (...) {} // rejection
 
       // check for total generated requests during modeling
-      if (counter_->total() == Constants::min_requests()) {
+      if (counter_->total() == min_requests_) {
         process_rest_ = true;
         // now it's time to stop generation and process rest in buffer
       }
@@ -139,7 +142,7 @@ void System::print_calendar() const
   }
 
   std::cout << "\nTOTAL: " << counter_->total()
-            << "/"         << Constants::min_requests() << "\n";
+            << "/"         << min_requests_() << "\n";
   std::cout << "================================================\n\n";
 }
 
@@ -225,9 +228,8 @@ std::vector<double> System::get_devices_coeff() const
 int System::get_progress() const
 {
   int total = counter_->total();
-  int max   = Constants::min_requests();
 
-  int progress = total / max;
+  int progress = total / min_requests_;
 
   if ((progress == 100) && !finished_) {
     return (progress - 100);

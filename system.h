@@ -38,6 +38,8 @@ public:
 
   int get_progress() const;
 
+  bool step_by_step_mode() const { return step_by_step_mode_; }
+
 private:
   typedef std::vector<Source>   Sources;
   typedef std::vector<Consumer> Consumers;
@@ -61,6 +63,8 @@ private:
   bool process_rest_ = false;
   bool finished_     = false;
 
+  const unsigned min_requests_;
+  const bool     step_by_step_mode_;
 };
 
 #endif // SYSTEM_H
