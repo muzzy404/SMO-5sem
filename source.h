@@ -10,7 +10,7 @@ class Source : public Device
 {
 public:
   Source(const unsigned, Counter_ptr);
-  Source(const unsigned, const double, Counter_ptr counter);
+  Source(const unsigned, const time_t, Counter_ptr);
 
   Request::Request_ptr get_request();
 

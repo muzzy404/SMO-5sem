@@ -76,8 +76,8 @@ Counter::time_t Counter::get_in_system_time(index_t i) const
   return (in_system_time_[i] / total_[i]);
 }
 
-Counter::time_t Counter::count_device_coeff(const time_t device_time,
-                                            const time_t realisation_time) const
+double Counter::count_device_coeff(const time_t device_time,
+                                   const time_t realisation_time) const
 {
   return (device_time / realisation_time);
 }

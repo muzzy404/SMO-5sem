@@ -117,16 +117,15 @@ unsigned System::find_min_consumer() const
   return find_min_time(consumers_);
 }
 
-
 void System::print_calendar() const
 {
   std::cout << "--- SOURCES ---\n";
   unsigned i = 0;
-  for(Source src : sources_) {
+  for(const Source & src : sources_) {
     std::cout << src.get_priority()     << " - time: "
               << src.get_current_time() << ", total: "
-              << counter_->total(i)      << ", rejected: "
-              << counter_->rejected(i)   << "\n";
+              << counter_->total(i)     << ", rejected: "
+              << counter_->rejected(i)  << "\n";
     i++;
   }
 
@@ -134,7 +133,7 @@ void System::print_calendar() const
   buffer_->print_reqs();
 
   std::cout << "\n--- CONSUMERS ---\n";
-  for(Consumer cnm : consumers_) {
+  for(const Consumer & cnm : consumers_) {
     std::cout << cnm.get_priority() << " - time: "
               << cnm.get_current_time() << "\n";
   }
@@ -147,7 +146,7 @@ void System::print_calendar() const
 void System::print_result_table() const
 {
   unsigned i = 0;
-  for(Source src : sources_) {
+  for(const Source & src : sources_) {
     std::cout << "SOURCE "    << src.get_priority();
     std::cout << "\n  total       : " << counter_->total(i);
     std::cout << "\n  rejected    : " << counter_->rejected(i);
@@ -171,7 +170,7 @@ void System::print_result_table() const
   std::cout << "REALISATION TIME = " << total_time << "\n\n";
 
 
-  for(Consumer cnm : consumers_) {
+  for(const Consumer & cnm : consumers_) {
     std::cout << "CONSUMER " << cnm.get_priority();
     std::cout << "\n  coefficient: "
               << counter_->count_device_coeff(total_time, cnm.get_current_time()) << "\n";
@@ -180,3 +179,45 @@ void System::print_result_table() const
   std::cout << "================================================\n\n";
 }
 
+Buffer::state_t System::get_buffer_state() const
+{
+  return buffer_->get_state();
+}
+
+System::devices_state_t System::get_sources_state() const
+{
+  devices_state_t state;
+  for(Source src : sources_) {
+    state.push_back(src.get_state());
+  }
+
+  return state;
+}
+
+System::devices_state_t System::get_consumers_state() const
+{
+  devices_state_t state;
+  for(Consumer cnmr : consumers_) {
+    state.push_back(cnmr.get_state());
+  }
+
+  return state;
+}
+
+std::vector<double> System::get_devices_coeff() const
+{
+  double total_time = (*std::max_element(consumers_.begin(), consumers_.end(),
+                          [](Consumer const & left, Consumer const & right)
+                          {
+                            return (left.get_current_time() < right.get_current_time());
+                          })).get_current_time();
+
+  std::vector<double> coefficients;
+
+  for(const Consumer & cnmr : consumers_) {
+    coefficients.push_back(counter_->count_device_coeff(total_time,
+                                                        cnmr.get_current_time()));
+  }
+
+  return coefficients;
+}

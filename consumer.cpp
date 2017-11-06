@@ -7,7 +7,7 @@ Consumer::Consumer(const unsigned priority, Counter_ptr counter) :
   Consumer(priority, 0.0, counter)
 {}
 
-Consumer::Consumer(const unsigned priority, const double time, Counter_ptr counter) :
+Consumer::Consumer(const unsigned priority, const time_t time, Counter_ptr counter) :
   Device(priority, time, counter)
 {
   last_processed_ = "none";
@@ -23,8 +23,8 @@ void Consumer::process_request(Request::Request_ptr & request)
 
   unsigned i = request->get_priority();
 
-  double entrance_time = current_time_;
-  double creation_time = request->get_creation_time();
+  time_t entrance_time = current_time_;
+  time_t creation_time = request->get_creation_time();
 
   counter_->add_in_buffer_time(i, current_time_ - creation_time);
 

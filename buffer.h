@@ -13,6 +13,8 @@ public:
   typedef Request::Request_ptr Request_ptr;
   typedef Counter::Counter_ptr Counter_ptr;
 
+  typedef std::vector<std::string> state_t;
+
   Buffer(const unsigned size, Counter_ptr counter);
 
   void add(const Request_ptr request);
@@ -20,7 +22,7 @@ public:
 
   void print_reqs() const;
 
-  std::vector<std::string> get_state() const;
+  state_t get_state() const;
 
 private:
   std::vector<Request_ptr> buffer_;

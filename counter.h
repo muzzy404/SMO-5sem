@@ -34,7 +34,7 @@ public:
   time_t get_service_time(index_t i)   const;
   time_t get_in_system_time(index_t i) const;
 
-  time_t count_device_coeff(const time_t device_time,
+  double count_device_coeff(const time_t device_time,
                             const time_t realisation_time) const;
 
 private:

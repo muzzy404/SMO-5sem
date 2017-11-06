@@ -102,7 +102,7 @@ void Buffer::print_reqs() const
   }
 }
 
-std::vector<std::string> Buffer::get_state() const
+Buffer::state_t Buffer::get_state() const
 {
   std::vector<std::string> state;
 

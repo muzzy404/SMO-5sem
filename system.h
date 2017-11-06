@@ -11,18 +11,26 @@
 class System
 {
 public:
+  typedef std::vector<Device::state_t> devices_state_t;
+
   System();
 
   void next_iteration();
 
   bool finished() const { return finished_; }
 
+  // TODO: remove
   void print_calendar()     const;
   void print_result_table() const;
 
-  // TODO: getters for calendar
+  // getters for calendar
+  Buffer::state_t get_buffer_state()    const;
+  devices_state_t get_sources_state()   const;
+  devices_state_t get_consumers_state() const;
 
-  // TODO: getters for results
+  // getters for results
+  Counter::Counter_ptr get_counter() const { return counter_; }
+  std::vector<double>  get_devices_coeff() const;
 
 private:
   typedef std::vector<Source>   Sources;

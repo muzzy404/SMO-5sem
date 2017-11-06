@@ -8,14 +8,14 @@ Source::Source(const unsigned priority, Counter_ptr counter) :
   requests_num_(0)
 {}
 
-Source::Source(const unsigned priority, const double time, Counter_ptr counter) :
+Source::Source(const unsigned priority, const time_t time, Counter_ptr counter) :
   Device(priority, time, counter),
   requests_num_(0)
 {}
 
 Request::Request_ptr Source::get_request()
 {
-  double creation_time = current_time_;
+  time_t creation_time = current_time_;
   next_time_point();
 
   counter_->add_request(priority_);

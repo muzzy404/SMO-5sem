@@ -10,7 +10,7 @@ class Consumer : public Device
 {
 public:
   Consumer(const unsigned, Counter_ptr);
-  Consumer(const unsigned, const double, Counter_ptr);
+  Consumer(const unsigned, const time_t, Counter_ptr);
 
   void process_request(Request::Request_ptr & request);
 
