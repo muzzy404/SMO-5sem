@@ -19,12 +19,10 @@ Request::Request_ptr Source::get_request()
   next_time_point();
 
   counter_->add_request(priority_);
+
   return std::make_shared<Request>(priority_,
-                                   ++requests_num_,
+                                   requests_num_,
                                    creation_time);
-  last_request_ = (std::to_string(priority_) +
-                   "." +
-                   std::to_string(requests_num_));
 }
 
 void Source::next_time_point()
@@ -33,4 +31,8 @@ void Source::next_time_point()
   current_time_ += Constants::distribution() *
                   (Constants::beta() - Constants::alpha())
                                      + Constants::alpha();
+
+  last_request_ = (std::to_string(priority_ + 1) +
+                   "." +
+                   std::to_string(++requests_num_));
 }

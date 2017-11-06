@@ -4,8 +4,11 @@
 #include <stdexcept>
 #include <iostream>  // for results printing
 #include <algorithm> // for results, max_element
+#include <cmath>     // for round
 
-System::System()
+System::System() :
+  min_requests_(Constants::min_requests()),
+  step_by_step_mode_(Constants::step_by_step_mode())
 {
   const unsigned sources_num   = Constants::sources();
   const unsigned consumers_num = Constants::consumers();
@@ -21,9 +24,6 @@ System::System()
   for(unsigned i = 0; i <consumers_num; ++i) {
     consumers_.push_back(*(new Consumer(i, counter_)));
   }
-
-  min_requests_      = Constants::min_requests();
-  step_by_step_mode_ = Constants::step_by_step_mode();
 }
 
 void System::next_iteration()
@@ -142,7 +142,7 @@ void System::print_calendar() const
   }
 
   std::cout << "\nTOTAL: " << counter_->total()
-            << "/"         << min_requests_() << "\n";
+            << "/"         << min_requests_ << "\n";
   std::cout << "================================================\n\n";
 }
 
@@ -182,7 +182,7 @@ void System::print_result_table() const
   std::cout << "================================================\n\n";
 }
 
-Buffer::state_t System::get_buffer_state() const
+System::buffer_state_t System::get_buffer_state() const
 {
   return buffer_->get_state();
 }
@@ -227,12 +227,12 @@ std::vector<double> System::get_devices_coeff() const
 
 int System::get_progress() const
 {
-  int total = counter_->total();
+  double total = (double)(counter_->total());
 
-  int progress = total / min_requests_;
+  int progress = (int)(std::round(total / min_requests_ * 100));
 
   if ((progress == 100) && !finished_) {
-    return (progress - 100);
+    return (progress - 1);
   }
 
   return progress;

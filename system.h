@@ -12,6 +12,7 @@ class System
 {
 public:
   typedef std::vector<Device::state_t> devices_state_t;
+  typedef Buffer::state_t              buffer_state_t;
 
   System();
 
@@ -24,7 +25,7 @@ public:
   void print_result_table() const;
 
   // getters for calendar
-  Buffer::state_t get_buffer_state()    const;
+  buffer_state_t  get_buffer_state()    const;
   devices_state_t get_sources_state()   const;
   devices_state_t get_consumers_state() const;
 

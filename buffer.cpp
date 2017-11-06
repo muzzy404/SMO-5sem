@@ -107,6 +107,11 @@ Buffer::state_t Buffer::get_state() const
   std::vector<std::string> state;
 
   for(Request_ptr req : buffer_) {
+    if (req == nullptr) {
+      state.push_back("empty");
+      continue;
+    }
+
     auto src = std::to_string(req->get_priority());
     auto num = std::to_string(req->get_number());
 

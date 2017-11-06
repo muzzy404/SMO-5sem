@@ -31,7 +31,7 @@ void Consumer::process_request(Request::Request_ptr & request)
   counter_->add_service_time(i,   current_time_ - entrance_time);
   counter_->add_in_system_time(i, current_time_ - creation_time);
 
-  last_request_ = (std::to_string(request->get_priority()) +
+  last_request_ = (std::to_string(request->get_priority() + 1) +
                    "." +
                    std::to_string(request->get_number()));
 }

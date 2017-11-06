@@ -22,12 +22,15 @@ public:
                             QWidget * parent = 0);
   ~StepByStepWindow();
 
-
+private slots:
+  void btn_next_pressed();
 
 private:
   Ui::StepByStepWindow *ui;
 
   System_ptr system_;
+
+  void update_visible_data();
 };
 
 #endif // STEPBYSTEPWINDOW_H
