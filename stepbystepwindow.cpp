@@ -23,7 +23,15 @@ StepByStepWindow::StepByStepWindow(System_ptr & system,
 
   ui->modelingProgressBar->setValue(0);
 
-  connect(ui->btnNext, SIGNAL (released()), this, SLOT (btn_next_pressed()));
+  connect(ui->btnNext, SIGNAL (released()),
+          this, SLOT (btn_next_pressed()));
+
+  if (!system_->step_by_step_mode()) {
+    while (!system_->finished()) {
+      btn_next_pressed();
+    }
+    return;
+  }
 
   update_visible_data();
 }

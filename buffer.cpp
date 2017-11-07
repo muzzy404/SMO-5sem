@@ -112,7 +112,7 @@ Buffer::state_t Buffer::get_state() const
       continue;
     }
 
-    auto src = std::to_string(req->get_priority());
+    auto src = std::to_string(req->get_priority() + 1);
     auto num = std::to_string(req->get_number());
 
     state.push_back(src + "." + num);
