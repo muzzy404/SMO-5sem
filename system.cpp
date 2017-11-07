@@ -5,6 +5,8 @@
 #include <iostream>  // for results printing
 #include <algorithm> // for results, max_element
 #include <cmath>     // for round
+#include <cstdlib>   // srand
+#include <ctime>     // time
 
 System::System() :
   min_requests_(Constants::min_requests()),
@@ -16,6 +18,8 @@ System::System() :
   counter_ = std::make_shared<Counter>(sources_num);
   buffer_  = std::make_unique<Buffer>(Constants::buffer(), counter_);
 
+  std::srand(std::time(0));
+
   for(unsigned i = 0; i < sources_num; ++i) {
     sources_.push_back(*(new Source(i, counter_)));
     sources_.at(i).next_time_point(); // generate time for first requests
@@ -24,6 +28,8 @@ System::System() :
   for(unsigned i = 0; i <consumers_num; ++i) {
     consumers_.push_back(*(new Consumer(i, counter_)));
   }
+
+  status_ = "system ready for simulation";
 }
 
 void System::next_iteration()
@@ -39,12 +45,16 @@ void System::next_iteration()
   {
     try {
       Req_ptr request = buffer_->get();
-      consumers_.at(find_min_consumer()).process_request(request);
+      unsigned min_consumer = find_min_consumer();
+      consumers_.at(min_consumer).process_request(request);
 
+      status_ = "rest processing: consumer " + std::to_string(min_consumer + 1);
     } catch (...) {
       // buffer is finally empty
       finished_     = true;
       process_rest_ = false;
+
+      status_ = "simulation is over";
     }
     return; // only rest requests processing
   }
@@ -64,9 +74,13 @@ void System::next_iteration()
     case SOURCE:
     {
       Req_ptr request = sources_.at(min_source).get_request();
+      std::string source_num_str = std::to_string(min_source + 1);
       try {
         buffer_->add(request);
-      } catch (...) {} // rejection
+        status_ = "source " + source_num_str + " sent request to buffer";
+      } catch (...) {
+        status_ = "rejection on source " + source_num_str;
+      } // rejection
 
       // check for total generated requests during modeling
       if (counter_->total() == min_requests_) {
@@ -81,10 +95,14 @@ void System::next_iteration()
       try {
         Req_ptr request = buffer_->get();
         consumers_.at(min_consumer).process_request(request);
+
+        status_ = "processing on consumer " + std::to_string(min_consumer + 1);
       } catch (...) { // buffer is empty
         // generate new request and put it into buffer for next iteration
         min_source = find_min_source();
         buffer_->add(sources_.at(min_source).get_request());
+
+        status_ = "source " + std::to_string(min_source + 1) + " sent request to buffer";
       }
 
       break;

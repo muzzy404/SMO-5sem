@@ -81,4 +81,5 @@ void StepByStepWindow::update_visible_data()
   }
 
   ui->modelingProgressBar->setValue(system_->get_progress());
+  ui->lblStatusBar->setText(QString::fromStdString(system_->get_status()));
 }

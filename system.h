@@ -40,6 +40,7 @@ public:
   int get_progress() const;
 
   bool step_by_step_mode() const { return step_by_step_mode_; }
+  std::string get_status() const { return status_; }
 
 private:
   typedef std::vector<Source>   Sources;
@@ -66,6 +67,8 @@ private:
 
   const unsigned min_requests_;
   const bool     step_by_step_mode_;
+
+  std::string status_;
 };
 
 #endif // SYSTEM_H

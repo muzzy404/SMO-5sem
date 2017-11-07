@@ -111,7 +111,7 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="2">
+      <item row="5" column="2">
        <layout class="QHBoxLayout" name="btnsLayout">
         <item>
          <widget class="QPushButton" name="btnStop">
@@ -158,6 +158,19 @@
         </column>
        </widget>
       </item>
+      <item row="4" column="0" colspan="3">
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
       <item row="1" column="0" colspan="3">
        <spacer name="horizontalSpacer">
         <property name="orientation">
@@ -191,18 +204,12 @@
         </column>
        </widget>
       </item>
-      <item row="3" column="0" colspan="3">
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+      <item row="3" column="0">
+       <widget class="QLabel" name="lblStatusBar">
+        <property name="text">
+         <string>status</string>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
+       </widget>
       </item>
      </layout>
     </item>
