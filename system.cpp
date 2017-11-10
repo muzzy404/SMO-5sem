@@ -9,7 +9,7 @@
 #include <ctime>     // time
 
 System::System() :
-  min_requests_(Constants::min_requests()),
+  max_requests_(Constants::min_requests()),
   step_by_step_mode_(Constants::step_by_step_mode())
 {
   const unsigned sources_num   = Constants::sources();
@@ -84,7 +84,7 @@ void System::next_iteration()
       } // rejection
 
       // check for total generated requests during modeling
-      if (counter_->total() == min_requests_) {
+      if (counter_->total() == max_requests_) {
         process_rest_ = true;
         // now it's time to stop generation and process rest in buffer
       }
@@ -161,7 +161,7 @@ void System::print_calendar() const
   }
 
   std::cout << "\nTOTAL: " << counter_->total()
-            << "/"         << min_requests_ << "\n";
+            << "/"         << max_requests_ << "\n";
   std::cout << "================================================\n\n";
 }
 
@@ -248,7 +248,7 @@ System::amount_t System::get_total_processed() const
 {
   amount_t amount;
   for(unsigned i = 0; i < counter_->size_cnmr(); ++i) {
-    amount.push_back(counter_->total_processed(i));
+    amount.push_back(counter_->processed(i));
   }
   return amount;
 }
@@ -275,7 +275,7 @@ int System::get_progress() const
 {
   double total = (double)(counter_->total());
 
-  int progress = (int)(std::round(total / min_requests_ * 100));
+  int progress = (int)(std::round(total / max_requests_ * 100));
 
   if ((progress == 100) && !finished_) {
     return (progress - 1);

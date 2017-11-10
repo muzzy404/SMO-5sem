@@ -31,6 +31,7 @@ private:
   System_ptr system_;
 
   void update_visible_data();
+  void update_counters();
 };
 
 #endif // STEPBYSTEPWINDOW_H

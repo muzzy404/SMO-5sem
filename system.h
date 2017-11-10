@@ -46,6 +46,7 @@ public:
 
   bool step_by_step_mode() const { return step_by_step_mode_; }
   std::string get_status() const { return status_; }
+  unsigned get_max_requests() const { return max_requests_; }
 
 private:
   typedef std::vector<Source>   Sources;
@@ -70,7 +71,7 @@ private:
   bool process_rest_ = false;
   bool finished_     = false;
 
-  const unsigned min_requests_;
+  const unsigned max_requests_;
   const bool     step_by_step_mode_;
 
   std::string status_;

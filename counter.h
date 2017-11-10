@@ -14,22 +14,23 @@ public:
   Counter(index_t sources_num, index_t consumers_num);
 
   unsigned size_src()  const { return total_.size(); }
-  unsigned size_cnmr() const { return total_processed_.size(); }
+  unsigned size_cnmr() const { return processed_.size(); }
 
   void add_request(index_t i)   { total_[i] += 1;    }
   void add_rejected(index_t i)  { rejected_[i] += 1; }
-  void add_processed(index_t i) { total_processed_[i] += 1; }
+  void add_processed(index_t i) { processed_[i] += 1; }
 
   void add_service_time(index_t i, const time_t delta);
   void add_in_buffer_time(index_t i, const time_t delta);
   void add_in_system_time(index_t i, const time_t delta);
 
-  unsigned total()             const;
-  unsigned total(index_t i)    const { return total_[i];    }
-  unsigned rejected(index_t i) const { return rejected_[i]; }
+  unsigned total()     const;
+  unsigned processed() const;
+  unsigned rejected()  const;
 
-  unsigned total_processed() const;
-  unsigned total_processed(index_t i) const { return total_processed_[i]; }
+  unsigned total(index_t i)    const  { return total_[i];     }
+  unsigned rejected(index_t i) const  { return rejected_[i];  }
+  unsigned processed(index_t i) const { return processed_[i]; }
 
   double get_rejection_probability(index_t i) const;
   double get_waiting_dispersion(index_t i)    const;
@@ -47,8 +48,8 @@ private:
   typedef std::vector<double>   statistics_time;
 
   statistics_num total_;
-  statistics_num total_processed_;
   statistics_num rejected_;
+  statistics_num processed_;
 
   statistics_time service_time_;
   statistics_time in_buffer_time_;

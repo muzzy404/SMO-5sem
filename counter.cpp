@@ -4,10 +4,9 @@
 
 Counter::Counter(index_t sources_num, index_t consumers_num)
 {
-  total_    = std::vector<unsigned>(sources_num, 0);
-  rejected_ = std::vector<unsigned>(sources_num, 0);
-
-  total_processed_ = std::vector<unsigned>(consumers_num, 0);
+  total_     = std::vector<unsigned>(sources_num, 0);
+  rejected_  = std::vector<unsigned>(sources_num, 0);
+  processed_ = std::vector<unsigned>(consumers_num, 0);
 
   service_time_   = std::vector<time_t>(sources_num, 0.0);
   in_buffer_time_ = std::vector<time_t>(sources_num, 0.0);
@@ -44,11 +43,18 @@ unsigned Counter::total() const
   return total;
 }
 
-unsigned Counter::total_processed() const
+unsigned Counter::processed() const
 {
-  return std::accumulate(total_processed_.begin(),
-                         total_processed_.end(), 0);
+  return std::accumulate(processed_.begin(),
+                         processed_.end(), 0);
 }
+
+unsigned Counter::rejected() const
+{
+  return std::accumulate(rejected_.begin(),
+                         rejected_.end(), 0);
+}
+
 
 double Counter::get_rejection_probability(index_t i) const
 {

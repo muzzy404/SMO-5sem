@@ -68,8 +68,8 @@ void StepByStepWindow::update_visible_data()
 
     ui->tblSources->setItem(i, 0, new QTableWidgetItem(time));
     ui->tblSources->setItem(i, 1, new QTableWidgetItem(req));
-    ui->tblSources->setItem(i, 2, new QTableWidgetItem(total));
-    ui->tblSources->setItem(i, 3, new QTableWidgetItem(rejected));
+    ui->tblSources->setItem(i, 2, new QTableWidgetItem(rejected));
+    ui->tblSources->setItem(i, 3, new QTableWidgetItem(total));
   }
 
   System::devices_state_t consumers = system_->get_consumers_state();
@@ -94,4 +94,22 @@ void StepByStepWindow::update_visible_data()
 
   ui->modelingProgressBar->setValue(system_->get_progress());
   ui->lblStatusBar->setText(QString::fromStdString(system_->get_status()));
+
+  update_counters();
+}
+
+void StepByStepWindow::update_counters()
+{
+  auto counter = system_->get_counter();
+  QString generated = QString::number(counter->total()) + "/" +
+                      QString::number(system_->get_max_requests());
+  auto processed = counter->processed();
+  auto rejected  = counter->rejected();
+  auto sum = processed + rejected;
+
+  ui->lblGenField->setText(generated);
+
+  ui->lblProcField->setText(QString::number(processed));
+  ui->lblRejField->setText(QString::number(rejected));
+  ui->lblTotalField->setText(QString::number(sum));
 }
