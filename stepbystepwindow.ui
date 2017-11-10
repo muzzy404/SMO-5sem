@@ -40,7 +40,10 @@
      <height>561</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="mainLayout">
+   <layout class="QVBoxLayout" name="mainLayout" stretch="0,0">
+    <property name="spacing">
+     <number>6</number>
+    </property>
     <item>
      <layout class="QHBoxLayout" name="HeadersLayuot">
       <item>
@@ -82,7 +85,14 @@
      </layout>
     </item>
     <item>
-     <layout class="QGridLayout" name="gridTables">
+     <layout class="QGridLayout" name="gridTables" columnstretch="4,1,3">
+      <item row="2" column="0" colspan="3">
+       <widget class="QProgressBar" name="modelingProgressBar">
+        <property name="value">
+         <number>24</number>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="1">
        <widget class="QTableWidget" name="tblBuffer">
         <property name="sizePolicy">
@@ -93,7 +103,7 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>150</width>
+          <width>10000</width>
           <height>16777215</height>
          </size>
         </property>
@@ -104,22 +114,28 @@
         </column>
        </widget>
       </item>
-      <item row="2" column="0" colspan="3">
-       <widget class="QProgressBar" name="modelingProgressBar">
-        <property name="value">
-         <number>24</number>
-        </property>
-       </widget>
-      </item>
       <item row="5" column="2">
-       <layout class="QHBoxLayout" name="btnsLayout">
+       <layout class="QHBoxLayout" name="btnsLayout" stretch="2,3,3">
         <item>
-         <widget class="QPushButton" name="btnStop">
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>30</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnOpenResults">
           <property name="enabled">
            <bool>false</bool>
           </property>
           <property name="text">
-           <string>Stop</string>
+           <string>Open results</string>
           </property>
           <property name="autoDefault">
            <bool>false</bool>
@@ -144,20 +160,6 @@
         </item>
        </layout>
       </item>
-      <item row="0" column="2">
-       <widget class="QTableWidget" name="tblConsumers">
-        <column>
-         <property name="text">
-          <string>time</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>last processed</string>
-         </property>
-        </column>
-       </widget>
-      </item>
       <item row="4" column="0" colspan="3">
        <spacer name="horizontalSpacer_2">
         <property name="orientation">
@@ -170,6 +172,31 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item row="0" column="2">
+       <widget class="QTableWidget" name="tblConsumers">
+        <property name="maximumSize">
+         <size>
+          <width>10000</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <column>
+         <property name="text">
+          <string>time</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>last request</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>total</string>
+         </property>
+        </column>
+       </widget>
       </item>
       <item row="1" column="0" colspan="3">
        <spacer name="horizontalSpacer">
@@ -184,6 +211,13 @@
         </property>
        </spacer>
       </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="lblStatusBar">
+        <property name="text">
+         <string>status</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="0">
        <widget class="QTableWidget" name="tblSources">
         <property name="sizePolicy">
@@ -191,6 +225,12 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>10000</width>
+          <height>16777215</height>
+         </size>
         </property>
         <column>
          <property name="text">
@@ -202,13 +242,16 @@
           <string>last sent</string>
          </property>
         </column>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="lblStatusBar">
-        <property name="text">
-         <string>status</string>
-        </property>
+        <column>
+         <property name="text">
+          <string>rejected</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>total</string>
+         </property>
+        </column>
        </widget>
       </item>
      </layout>
