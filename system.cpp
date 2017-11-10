@@ -15,7 +15,7 @@ System::System() :
   const unsigned sources_num   = Constants::sources();
   const unsigned consumers_num = Constants::consumers();
 
-  counter_ = std::make_shared<Counter>(sources_num);
+  counter_ = std::make_shared<Counter>(sources_num, consumers_num);
   buffer_  = std::make_unique<Buffer>(Constants::buffer(), counter_);
 
   std::srand(std::time(0));
@@ -25,7 +25,7 @@ System::System() :
     sources_.at(i).next_time_point(); // generate time for first requests
   }
 
-  for(unsigned i = 0; i <consumers_num; ++i) {
+  for(unsigned i = 0; i < consumers_num; ++i) {
     consumers_.push_back(*(new Consumer(i, counter_)));
   }
 
@@ -79,6 +79,7 @@ void System::next_iteration()
         buffer_->add(request);
         status_ = "source " + source_num_str + " sent request to buffer";
       } catch (...) {
+        //counter_
         status_ = "rejection on source " + source_num_str;
       } // rejection
 
@@ -223,6 +224,33 @@ System::devices_state_t System::get_consumers_state() const
   }
 
   return state;
+}
+
+System::amount_t System::get_total_requests() const
+{
+  amount_t amount;
+  for(unsigned i = 0; i < counter_->size_src(); ++i) {
+    amount.push_back(counter_->total(i));
+  }
+  return amount;
+}
+
+System::amount_t System::get_rejected_requests() const
+{
+  amount_t amount;
+  for(unsigned i = 0; i < counter_->size_src(); ++i) {
+    amount.push_back(counter_->rejected(i));
+  }
+  return amount;
+}
+
+System::amount_t System::get_total_processed() const
+{
+  amount_t amount;
+  for(unsigned i = 0; i < counter_->size_cnmr(); ++i) {
+    amount.push_back(counter_->total_processed(i));
+  }
+  return amount;
 }
 
 std::vector<double> System::get_devices_coeff() const

@@ -56,21 +56,33 @@ void StepByStepWindow::btn_next_pressed()
 void StepByStepWindow::update_visible_data()
 {
   System::devices_state_t sources = system_->get_sources_state();
+  System::amount_t all_total      = system_->get_total_requests();
+  System::amount_t all_rejected   = system_->get_rejected_requests();
+
   for(unsigned i = 0; i < system_->get_sources_num(); ++i) {
     QString time = QString::fromStdString(sources.at(i).first);
     QString req  = QString::fromStdString(sources.at(i).second);
 
+    QString total    = QString::number(all_total.at(i));
+    QString rejected = QString::number(all_rejected.at(i));
+
     ui->tblSources->setItem(i, 0, new QTableWidgetItem(time));
     ui->tblSources->setItem(i, 1, new QTableWidgetItem(req));
+    ui->tblSources->setItem(i, 2, new QTableWidgetItem(total));
+    ui->tblSources->setItem(i, 3, new QTableWidgetItem(rejected));
   }
 
   System::devices_state_t consumers = system_->get_consumers_state();
+  System::amount_t all_processed = system_->get_total_processed();
+
   for(unsigned i = 0; i < system_->get_consumers_num(); ++i) {
     QString time = QString::fromStdString(consumers.at(i).first);
     QString req  = QString::fromStdString(consumers.at(i).second);
+    QString processed = QString::number(all_processed.at(i));
 
     ui->tblConsumers->setItem(i, 0, new QTableWidgetItem(time));
     ui->tblConsumers->setItem(i, 1, new QTableWidgetItem(req));
+    ui->tblConsumers->setItem(i, 2, new QTableWidgetItem(processed));
   }
 
   System::buffer_state_t buffer = system_->get_buffer_state();

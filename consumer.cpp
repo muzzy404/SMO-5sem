@@ -34,6 +34,7 @@ void Consumer::process_request(Request::Request_ptr & request)
   last_request_ = (std::to_string(request->get_priority() + 1) +
                    "." +
                    std::to_string(request->get_number()));
+  counter_->add_processed(priority_);
 }
 
 void Consumer::next_time_point()

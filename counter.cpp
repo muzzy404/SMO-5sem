@@ -1,9 +1,13 @@
 #include "counter.h"
 
-Counter::Counter(index_t sources_num)
+#include <algorithm>
+
+Counter::Counter(index_t sources_num, index_t consumers_num)
 {
   total_    = std::vector<unsigned>(sources_num, 0);
   rejected_ = std::vector<unsigned>(sources_num, 0);
+
+  total_processed_ = std::vector<unsigned>(consumers_num, 0);
 
   service_time_   = std::vector<time_t>(sources_num, 0.0);
   in_buffer_time_ = std::vector<time_t>(sources_num, 0.0);
@@ -38,6 +42,12 @@ unsigned Counter::total() const
     total += num;
   }
   return total;
+}
+
+unsigned Counter::total_processed() const
+{
+  return std::accumulate(total_processed_.begin(),
+                         total_processed_.end(), 0);
 }
 
 double Counter::get_rejection_probability(index_t i) const

@@ -12,6 +12,7 @@ class System
 {
 public:
   typedef std::vector<Device::state_t> devices_state_t;
+  typedef std::vector<unsigned>        amount_t;
   typedef Buffer::state_t              buffer_state_t;
 
   System();
@@ -28,6 +29,10 @@ public:
   buffer_state_t  get_buffer_state()    const;
   devices_state_t get_sources_state()   const;
   devices_state_t get_consumers_state() const;
+
+  amount_t get_total_requests()    const;
+  amount_t get_rejected_requests() const;
+  amount_t get_total_processed()   const;
 
   // getters for results
   Counter::Counter_ptr get_counter() const { return counter_; }
