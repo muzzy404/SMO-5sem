@@ -50,11 +50,10 @@ void System::next_iteration()
 
       status_ = "rest processing: consumer " + std::to_string(min_consumer + 1);
     } catch (...) {
-      // buffer is finally empty
-      finished_     = true;
-      process_rest_ = false;
+      status_ = "buffer is finally empty, simulation is over";
 
-      status_ = "simulation is over";
+      process_rest_ = false;
+      finished_     = true;
     }
     return; // only rest requests processing
   }
@@ -109,6 +108,11 @@ void System::next_iteration()
       break;
     }
     } // switch end
+
+  if (counter_->rejected() + counter_->processed() == max_requests_) {
+    finished_ = true;
+    status_ = "simulation is over";
+  }
 }
 
 template < typename T >

@@ -37,22 +37,37 @@ StepByStepWindow::~StepByStepWindow()
 void StepByStepWindow::start()
 {
   QMessageBox msg;
-  msg.setText("Press Ok to start simulation");
   msg.setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint);
+  msg.setText("Press Ok to start simulation");
   msg.exec();
 
   if (!system_->step_by_step_mode()) {
     while (!system_->finished()) {
+
+      // limit for visual updating
+      if (system_->get_max_requests() > lim_for_updates) {
+        int progress = system_->get_progress();
+        if (progress % 10 != 0 && progress != 99) {
+          btn_next_pressed(false);
+          continue;
+        }
+      }
+
+      // for max_requests < limit
       btn_next_pressed();
     }
+    // to open msgBox
+    btn_next_pressed();
   }
+
 }
 
-void StepByStepWindow::btn_next_pressed()
+void StepByStepWindow::btn_next_pressed(const bool update)
 {
   try {
     system_->next_iteration();
-    update_visible_data();
+    if (update)
+      update_visible_data();
   } catch (...) {
     QMessageBox msg;
     msg.setText("Simulation has been completed.");

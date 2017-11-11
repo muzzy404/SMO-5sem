@@ -25,7 +25,7 @@ public:
   void start();
 
 private slots:
-  void btn_next_pressed();
+  void btn_next_pressed(const bool update = true);
 
 private:
   Ui::StepByStepWindow * ui;
@@ -34,6 +34,8 @@ private:
 
   void update_visible_data();
   void update_counters();
+
+  const unsigned lim_for_updates = 9999;
 };
 
 #endif // STEPBYSTEPWINDOW_H
