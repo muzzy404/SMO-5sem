@@ -59,4 +59,5 @@ void MainWindow::btn_start_pressed()
 
   StepByStepWindow * step_by_step_window = new StepByStepWindow(smo);
   step_by_step_window->show();
+  step_by_step_window->start();
 }

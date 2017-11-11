@@ -22,6 +22,8 @@ public:
                             QWidget * parent = 0);
   ~StepByStepWindow();
 
+  void start();
+
 private slots:
   void btn_next_pressed();
 

@@ -26,21 +26,26 @@ StepByStepWindow::StepByStepWindow(System_ptr & system,
   connect(ui->btnNext, SIGNAL (released()),
           this, SLOT (btn_next_pressed()));
 
-
   update_visible_data();
-
-  // TODO: move to separete function
-  if (!system_->step_by_step_mode()) {
-    while (!system_->finished()) {
-      btn_next_pressed();
-    }
-    return;
-  }
 }
 
 StepByStepWindow::~StepByStepWindow()
 {
   delete ui;
+}
+
+void StepByStepWindow::start()
+{
+  QMessageBox msg;
+  msg.setText("Press Ok to start simulation");
+  msg.setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint);
+  msg.exec();
+
+  if (!system_->step_by_step_mode()) {
+    while (!system_->finished()) {
+      btn_next_pressed();
+    }
+  }
 }
 
 void StepByStepWindow::btn_next_pressed()
