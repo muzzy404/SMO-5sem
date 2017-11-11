@@ -6,6 +6,15 @@
 class Constants
 {
 public:
+  static constexpr double   ALPHA_DEFAULT         = 1.0;
+  static constexpr double   BETA_DEFAULT          = 3.0;
+  static constexpr double   LAMBDA_DEFAULT        = 0.2;
+  static constexpr unsigned SOURCES_DEFAULT       = 12;
+  static constexpr unsigned CONSUMERS_DEFAULT     = 7;
+  static constexpr unsigned BUFFER_DEFAULT        = 6;
+  static constexpr unsigned MIN_REQUESTS_DEFAULT  = 70;
+  static constexpr bool STEP_BY_STEP_MODE_DEFAULT = true;
+
   static double alpha()           { return alpha_;        }
   static double beta()            { return beta_;         }
   static double lambda()          { return lambda_;       }
@@ -31,15 +40,6 @@ public:
   }
 
 private:
-  static constexpr double   ALPHA_DEFAULT         = 1.0;
-  static constexpr double   BETA_DEFAULT          = 3.0;
-  static constexpr double   LAMBDA_DEFAULT        = 0.2;
-  static constexpr unsigned SOURCES_DEFAULT       = 12;
-  static constexpr unsigned CONSUMERS_DEFAULT     = 7;
-  static constexpr unsigned BUFFER_DEFAULT        = 6;
-  static constexpr unsigned MIN_REQUESTS_DEFAULT  = 100;
-  static constexpr bool STEP_BY_STEP_MODE_DEFAULT = true;
-
   static double   alpha_;
   static double   beta_;
   static double   lambda_;

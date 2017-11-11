@@ -10,6 +10,24 @@
     <height>420</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>280</width>
+    <height>420</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>280</width>
+    <height>420</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>The Queueing System</string>
   </property>
@@ -20,7 +38,7 @@
       <x>10</x>
       <y>10</y>
       <width>261</width>
-      <height>371</height>
+      <height>361</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -34,14 +52,14 @@
       <number>6</number>
      </property>
      <item row="13" column="1">
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="btnStart">
        <property name="text">
         <string>Start</string>
        </property>
       </widget>
      </item>
      <item row="10" column="1">
-      <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+      <widget class="QDoubleSpinBox" name="spinLambda">
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
@@ -96,7 +114,7 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QSpinBox" name="spinBox_2">
+      <widget class="QSpinBox" name="spinCnmrs">
        <property name="maximumSize">
         <size>
          <width>80</width>
@@ -141,7 +159,7 @@
       </spacer>
      </item>
      <item row="2" column="1">
-      <widget class="QSpinBox" name="spinBox">
+      <widget class="QSpinBox" name="spinSrcs">
        <property name="maximumSize">
         <size>
          <width>80</width>
@@ -191,7 +209,7 @@
       </widget>
      </item>
      <item row="7" column="1">
-      <widget class="QDoubleSpinBox" name="doubleSpinBox">
+      <widget class="QDoubleSpinBox" name="spinAlpha">
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
@@ -214,7 +232,7 @@
       </spacer>
      </item>
      <item row="11" column="0" colspan="2">
-      <widget class="QCheckBox" name="checkBox">
+      <widget class="QCheckBox" name="chkBoxStepByStep">
        <property name="layoutDirection">
         <enum>Qt::LeftToRight</enum>
        </property>
@@ -224,7 +242,7 @@
       </widget>
      </item>
      <item row="8" column="1">
-      <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+      <widget class="QDoubleSpinBox" name="spinBeta">
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
@@ -241,7 +259,7 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QSpinBox" name="spinBox_3">
+      <widget class="QSpinBox" name="spinBuffer">
        <property name="maximumSize">
         <size>
          <width>80</width>
@@ -270,7 +288,7 @@
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QSpinBox" name="spinBox_7">
+      <widget class="QSpinBox" name="spinReqs">
        <property name="maximumSize">
         <size>
          <width>80</width>

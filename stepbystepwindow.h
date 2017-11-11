@@ -26,7 +26,7 @@ private slots:
   void btn_next_pressed();
 
 private:
-  Ui::StepByStepWindow *ui;
+  Ui::StepByStepWindow * ui;
 
   System_ptr system_;
 

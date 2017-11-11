@@ -26,14 +26,16 @@ StepByStepWindow::StepByStepWindow(System_ptr & system,
   connect(ui->btnNext, SIGNAL (released()),
           this, SLOT (btn_next_pressed()));
 
+
+  update_visible_data();
+
+  // TODO: move to separete function
   if (!system_->step_by_step_mode()) {
     while (!system_->finished()) {
       btn_next_pressed();
     }
     return;
   }
-
-  update_visible_data();
 }
 
 StepByStepWindow::~StepByStepWindow()
@@ -50,6 +52,9 @@ void StepByStepWindow::btn_next_pressed()
     QMessageBox msg;
     msg.setText("Simulation has been completed.");
     msg.exec();
+
+    ui->btnNext->setEnabled(false);
+    ui->btnOpenResults->setEnabled(true);
   }
 }
 
