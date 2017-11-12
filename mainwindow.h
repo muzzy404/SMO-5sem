@@ -17,6 +17,7 @@ public:
 
 private slots:
   void btn_start_pressed();
+  void reset_settings();
 
 private:
   Ui::MainWindow * ui;

@@ -38,7 +38,7 @@
       <x>10</x>
       <y>10</y>
       <width>261</width>
-      <height>361</height>
+      <height>381</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -336,7 +336,6 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
@@ -350,16 +349,16 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionSet_default_settings"/>
+    <addaction name="actionDefaultSettings"/>
     <addaction name="actionAbout"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <addaction name="menuAbout"/>
   </widget>
-  <action name="actionSet_default_settings">
+  <action name="actionDefaultSettings">
    <property name="text">
-    <string>Clear settings</string>
+    <string>Default settings</string>
    </property>
   </action>
   <action name="actionExit">

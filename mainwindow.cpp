@@ -15,6 +15,10 @@ MainWindow::MainWindow(QWidget * parent) :
   connect(ui->btnStart, SIGNAL (released()),
           this, SLOT (btn_start_pressed()));
 
+  connect(ui->actionDefaultSettings, SIGNAL (triggered()),
+          this, SLOT (reset_settings()));
+
+
   set_current_constants_to_fields();
 }
 
@@ -49,6 +53,12 @@ void MainWindow::set_current_constants_to_fields()
   ui->spinLambda->setValue(Constants::lambda());
 
   ui->chkBoxStepByStep->setChecked(Constants::step_by_step_mode());
+}
+
+void MainWindow::reset_settings()
+{
+  Constants::reset_all();
+  set_current_constants_to_fields();
 }
 
 void MainWindow::btn_start_pressed()
