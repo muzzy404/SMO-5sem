@@ -34,9 +34,24 @@ public:
   amount_t get_rejected_requests() const;
   amount_t get_total_processed()   const;
 
+  typedef std::vector<double>          coefficients_t;
+  typedef std::vector<Counter::time_t> times_t;
+
   // getters for results
-  Counter::Counter_ptr get_counter() const { return counter_; }
-  std::vector<double>  get_devices_coeff() const;
+  Counter::time_t get_realisation_time()  const;
+
+  coefficients_t get_rejection_probability() const; //TODO
+  coefficients_t get_devices_coeff()         const;
+  coefficients_t get_waiting_dispersion()    const; //TODO
+  coefficients_t get_service_dispersion()    const; //TODO
+
+  times_t times_staying_in_system() const; //TODO
+  times_t times_waiting() const; //TODO
+  times_t times_service() const; //TODO
+
+  unsigned total_reqs_num()     const { return counter_->total();     }
+  unsigned processed_reqs_num() const { return counter_->processed(); }
+  unsigned rejected_reqs_num()  const { return counter_->rejected();  }
 
   unsigned get_sources_num()   const { return sources_.size();   }
   unsigned get_buffer_size()   const { return buffer_->size();   }

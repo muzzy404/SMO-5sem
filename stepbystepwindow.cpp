@@ -125,11 +125,10 @@ void StepByStepWindow::update_visible_data()
 
 void StepByStepWindow::update_counters()
 {
-  auto counter = system_->get_counter();
-  QString generated = QString::number(counter->total()) + "/" +
+  QString generated = QString::number(system_->total_reqs_num()) + "/" +
                       QString::number(system_->get_max_requests());
-  auto processed = counter->processed();
-  auto rejected  = counter->rejected();
+  auto processed = system_->processed_reqs_num();
+  auto rejected  = system_->rejected_reqs_num();
   auto sum = processed + rejected;
 
   ui->lblGenField->setText(generated);

@@ -35,6 +35,8 @@ private:
   void update_visible_data();
   void update_counters();
 
+  //TODO: void closeEvent();
+
   const unsigned lim_for_updates = 9999;
 };
 

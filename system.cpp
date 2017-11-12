@@ -199,7 +199,7 @@ void System::print_result_table() const
   for(const Consumer & cnm : consumers_) {
     std::cout << "CONSUMER " << cnm.get_priority();
     std::cout << "\n  coefficient: "
-              << counter_->count_device_coeff(total_time, cnm.get_current_time()) << "\n";
+              << counter_->count_consumers_coeff(cnm.get_priority(), total_time) << "\n";
 
   }
   std::cout << "================================================\n\n";
@@ -257,19 +257,24 @@ System::amount_t System::get_total_processed() const
   return amount;
 }
 
+Counter::time_t System::get_realisation_time() const
+{
+  return (*std::max_element(consumers_.begin(), consumers_.end(),
+                              [](Consumer const & left, Consumer const & right)
+                              {
+                                return (left.get_current_time() < right.get_current_time());
+                              })).get_current_time();
+}
+
 std::vector<double> System::get_devices_coeff() const
 {
-  double total_time = (*std::max_element(consumers_.begin(), consumers_.end(),
-                          [](Consumer const & left, Consumer const & right)
-                          {
-                            return (left.get_current_time() < right.get_current_time());
-                          })).get_current_time();
+  double total_time = get_realisation_time();
 
   std::vector<double> coefficients;
 
   for(const Consumer & cnmr : consumers_) {
-    coefficients.push_back(counter_->count_device_coeff(total_time,
-                                                        cnmr.get_current_time()));
+    coefficients.push_back(counter_->count_consumers_coeff(cnmr.get_priority(),
+                                                        total_time));
   }
 
   return coefficients;

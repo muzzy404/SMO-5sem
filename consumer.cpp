@@ -28,7 +28,10 @@ void Consumer::process_request(Request::Request_ptr & request)
 
   next_time_point();
 
-  counter_->add_service_time(i,   current_time_ - entrance_time);
+  time_t service_time = current_time_ - entrance_time;
+
+  counter_->add_working_time(priority_, service_time);
+  counter_->add_service_time(i, service_time);
   counter_->add_in_system_time(i, current_time_ - creation_time);
 
   last_request_ = (std::to_string(request->get_priority() + 1) +

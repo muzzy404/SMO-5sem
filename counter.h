@@ -23,6 +23,7 @@ public:
   void add_service_time(index_t i, const time_t delta);
   void add_in_buffer_time(index_t i, const time_t delta);
   void add_in_system_time(index_t i, const time_t delta);
+  void add_working_time(index_t i, const time_t delta);
 
   unsigned total()     const;
   unsigned processed() const;
@@ -40,8 +41,8 @@ public:
   time_t get_service_time(index_t i)   const;
   time_t get_in_system_time(index_t i) const;
 
-  double count_device_coeff(const time_t device_time,
-                            const time_t realisation_time) const;
+  double count_consumers_coeff(const index_t i,
+                               const time_t realisation_time) const;
 
 private:
   typedef std::vector<unsigned> statistics_num;
@@ -54,6 +55,7 @@ private:
   statistics_time service_time_;
   statistics_time in_buffer_time_;
   statistics_time in_system_time_;
+  statistics_time working_time_;
 
   statistics_time in_buffer_time_pow_;
   statistics_time service_time_pow_;

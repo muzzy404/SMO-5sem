@@ -11,6 +11,7 @@ Counter::Counter(index_t sources_num, index_t consumers_num)
   service_time_   = std::vector<time_t>(sources_num, 0.0);
   in_buffer_time_ = std::vector<time_t>(sources_num, 0.0);
   in_system_time_ = std::vector<time_t>(sources_num, 0.0);
+  working_time_   = std::vector<time_t>(consumers_num, 0.0);
 
   in_buffer_time_pow_ = std::vector<time_t>(sources_num, 0.0);
   service_time_pow_   = std::vector<time_t>(sources_num, 0.0);
@@ -31,6 +32,11 @@ void Counter::add_in_buffer_time(index_t i, const time_t delta)
 void Counter::add_in_system_time(index_t i, const time_t delta)
 {
   in_system_time_[i] += delta;
+}
+
+void Counter::add_working_time(index_t i, const time_t delta)
+{
+  working_time_[i] += delta;
 }
 
 unsigned Counter::total() const
@@ -92,8 +98,8 @@ Counter::time_t Counter::get_in_system_time(index_t i) const
   return (in_system_time_[i] / total_[i]);
 }
 
-double Counter::count_device_coeff(const time_t device_time,
-                                   const time_t realisation_time) const
+double Counter::count_consumers_coeff(const index_t i,
+                                      const time_t realisation_time) const
 {
-  return (device_time / realisation_time);
+  return (working_time_[i] / realisation_time);
 }

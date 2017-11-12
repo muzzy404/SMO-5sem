@@ -23,7 +23,8 @@ SOURCES += main.cpp \
     constants.cpp \
     mainwindow.cpp \
     system.cpp \
-    stepbystepwindow.cpp
+    stepbystepwindow.cpp \
+    resultswindow.cpp
 
 HEADERS += \
     constants.h \
@@ -35,8 +36,10 @@ HEADERS += \
     device.h \
     mainwindow.h \
     system.h \
-    stepbystepwindow.h
+    stepbystepwindow.h \
+    resultswindow.h
 
 FORMS += \
     mainwindow.ui \
-    stepbystepwindow.ui
+    stepbystepwindow.ui \
+    resultswindow.ui
