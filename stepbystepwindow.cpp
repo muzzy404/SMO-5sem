@@ -1,10 +1,12 @@
 #include "stepbystepwindow.h"
 #include "ui_stepbystepwindow.h"
 
+#include "resultswindow.h"
+
 #include <QString>
 #include <QMessageBox>
 
-StepByStepWindow::StepByStepWindow(System_ptr & system,
+StepByStepWindow::StepByStepWindow(const System_ptr & system,
                                    QWidget * parent) :
   QWidget(parent),
   ui(new Ui::StepByStepWindow)
@@ -25,6 +27,9 @@ StepByStepWindow::StepByStepWindow(System_ptr & system,
 
   connect(ui->btnNext, SIGNAL (released()),
           this, SLOT (btn_next_pressed()));
+
+  connect(ui->btnOpenResults, SIGNAL (released()),
+          this, SLOT (btn_open_results_pressed()));
 
   update_visible_data();
 }
@@ -53,7 +58,7 @@ void StepByStepWindow::start()
         }
       }
 
-      // for max_requests < limit
+      // regular case
       btn_next_pressed();
     }
     // to open msgBox
@@ -78,11 +83,18 @@ void StepByStepWindow::btn_next_pressed(const bool update)
   }
 }
 
+void StepByStepWindow::btn_open_results_pressed()
+{
+  system_->count_statistics();
+  ResultsWindow * results_window = new ResultsWindow(system_);
+  results_window->show();
+}
+
 void StepByStepWindow::update_visible_data()
 {
   System::devices_state_t sources = system_->get_sources_state();
-  System::amount_t all_total      = system_->get_total_requests();
-  System::amount_t all_rejected   = system_->get_rejected_requests();
+  System::statistics_num all_total    = system_->get_total_requests();
+  System::statistics_num all_rejected = system_->get_rejected_requests();
 
   for(unsigned i = 0; i < system_->get_sources_num(); ++i) {
     QString time = QString::fromStdString(sources.at(i).first);
@@ -97,8 +109,8 @@ void StepByStepWindow::update_visible_data()
     ui->tblSources->setItem(i, 3, new QTableWidgetItem(total));
   }
 
-  System::devices_state_t consumers = system_->get_consumers_state();
-  System::amount_t all_processed = system_->get_total_processed();
+  System::devices_state_t consumers    = system_->get_consumers_state();
+  System::statistics_num all_processed = system_->get_total_processed();
 
   for(unsigned i = 0; i < system_->get_consumers_num(); ++i) {
     QString time = QString::fromStdString(consumers.at(i).first);

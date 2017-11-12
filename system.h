@@ -12,7 +12,7 @@ class System
 {
 public:
   typedef std::vector<Device::state_t> devices_state_t;
-  typedef std::vector<unsigned>        amount_t;
+  typedef Counter::statistics_num      statistics_num;
   typedef Buffer::state_t              buffer_state_t;
 
   System();
@@ -30,24 +30,26 @@ public:
   devices_state_t get_sources_state()   const;
   devices_state_t get_consumers_state() const;
 
-  amount_t get_total_requests()    const;
-  amount_t get_rejected_requests() const;
-  amount_t get_total_processed()   const;
+  statistics_num get_total_requests()    const { return counter_->statistics_total();     }
+  statistics_num get_rejected_requests() const { return counter_->statistics_rejected();  }
+  statistics_num get_total_processed()   const { return counter_->statistics_processed(); }
 
-  typedef std::vector<double>          coefficients_t;
-  typedef std::vector<Counter::time_t> times_t;
+  typedef std::vector<double>      statistics_t;
+  typedef Counter::statistics_time times_t;
 
   // getters for results
-  Counter::time_t get_realisation_time()  const;
+  Counter::time_t get_realisation_time() const;
 
-  coefficients_t get_rejection_probability() const; //TODO
-  coefficients_t get_devices_coeff()         const;
-  coefficients_t get_waiting_dispersion()    const; //TODO
-  coefficients_t get_service_dispersion()    const; //TODO
+  void count_statistics();
+  statistics_t rejection_probability() const { return rejection_probability_; }
+  statistics_t devices_coeff()         const { return devices_coeff_; }
+  statistics_t waiting_dispersion()    const { return waiting_dispersion_; }
+  statistics_t service_dispersion()    const { return service_dispersion_; }
 
-  times_t times_staying_in_system() const; //TODO
-  times_t times_waiting() const; //TODO
-  times_t times_service() const; //TODO
+  times_t times_in_system() const { return counter_->statistics_in_system_time(); }
+  times_t times_waiting() const { return counter_->statistics_waiting_time(); }
+  times_t times_service() const { return counter_->statistics_service_time(); }
+  times_t times_working() const { return counter_->statistics_working_time(); }
 
   unsigned total_reqs_num()     const { return counter_->total();     }
   unsigned processed_reqs_num() const { return counter_->processed(); }
@@ -90,6 +92,11 @@ private:
   const bool     step_by_step_mode_;
 
   std::string status_;
+
+  statistics_t rejection_probability_;
+  statistics_t devices_coeff_;
+  statistics_t waiting_dispersion_;
+  statistics_t service_dispersion_;
 };
 
 #endif // SYSTEM_H

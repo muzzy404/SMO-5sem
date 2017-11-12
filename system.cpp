@@ -230,33 +230,6 @@ System::devices_state_t System::get_consumers_state() const
   return state;
 }
 
-System::amount_t System::get_total_requests() const
-{
-  amount_t amount;
-  for(unsigned i = 0; i < counter_->size_src(); ++i) {
-    amount.push_back(counter_->total(i));
-  }
-  return amount;
-}
-
-System::amount_t System::get_rejected_requests() const
-{
-  amount_t amount;
-  for(unsigned i = 0; i < counter_->size_src(); ++i) {
-    amount.push_back(counter_->rejected(i));
-  }
-  return amount;
-}
-
-System::amount_t System::get_total_processed() const
-{
-  amount_t amount;
-  for(unsigned i = 0; i < counter_->size_cnmr(); ++i) {
-    amount.push_back(counter_->processed(i));
-  }
-  return amount;
-}
-
 Counter::time_t System::get_realisation_time() const
 {
   return (*std::max_element(consumers_.begin(), consumers_.end(),
@@ -266,18 +239,26 @@ Counter::time_t System::get_realisation_time() const
                               })).get_current_time();
 }
 
-std::vector<double> System::get_devices_coeff() const
+void System::count_statistics()
 {
-  double total_time = get_realisation_time();
+  rejection_probability_.clear();
+  devices_coeff_.clear();
+  waiting_dispersion_.clear();
+  service_dispersion_.clear();
 
-  std::vector<double> coefficients;
-
-  for(const Consumer & cnmr : consumers_) {
-    coefficients.push_back(counter_->count_consumers_coeff(cnmr.get_priority(),
-                                                        total_time));
+  // statistics for sources
+  for(const Source & src : sources_) {
+    auto i = src.get_priority();
+    rejection_probability_.push_back(counter_->get_rejection_probability(i));
+    waiting_dispersion_.push_back(counter_->get_waiting_dispersion(i));
+    service_dispersion_.push_back(counter_->get_service_dispersion(i));
   }
 
-  return coefficients;
+  auto total_time = this->get_realisation_time();
+  for(const Consumer & cnmr : consumers_) {
+    auto i = cnmr.get_priority();
+    devices_coeff_.push_back(counter_->count_consumers_coeff(i, total_time));
+  }
 }
 
 int System::get_progress() const

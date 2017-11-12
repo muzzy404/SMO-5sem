@@ -11,6 +11,9 @@ public:
   typedef double                   time_t;
   typedef std::shared_ptr<Counter> Counter_ptr;
 
+  typedef std::vector<unsigned> statistics_num;
+  typedef std::vector<time_t>   statistics_time;
+
   Counter(index_t sources_num, index_t consumers_num);
 
   unsigned size_src()  const { return total_.size(); }
@@ -32,6 +35,9 @@ public:
   unsigned total(index_t i)    const  { return total_[i];     }
   unsigned rejected(index_t i) const  { return rejected_[i];  }
   unsigned processed(index_t i) const { return processed_[i]; }
+  statistics_num statistics_total()     const { return total_;     }
+  statistics_num statistics_rejected()  const { return rejected_;  }
+  statistics_num statistics_processed() const { return processed_; }
 
   double get_rejection_probability(index_t i) const;
   double get_waiting_dispersion(index_t i)    const;
@@ -40,14 +46,15 @@ public:
   time_t get_waiting_time(index_t i)   const;
   time_t get_service_time(index_t i)   const;
   time_t get_in_system_time(index_t i) const;
+  statistics_time statistics_service_time()   const { return service_time_; }
+  statistics_time statistics_working_time()   const { return working_time_; }
+  statistics_time statistics_waiting_time()   const { return in_buffer_time_; }
+  statistics_time statistics_in_system_time() const { return in_system_time_; }
 
   double count_consumers_coeff(const index_t i,
                                const time_t realisation_time) const;
 
 private:
-  typedef std::vector<unsigned> statistics_num;
-  typedef std::vector<double>   statistics_time;
-
   statistics_num total_;
   statistics_num rejected_;
   statistics_num processed_;

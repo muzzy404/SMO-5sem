@@ -18,7 +18,7 @@ class StepByStepWindow : public QWidget
 public:
   typedef std::shared_ptr<System> System_ptr;
 
-  explicit StepByStepWindow(System_ptr & system,
+  explicit StepByStepWindow(const System_ptr & system,
                             QWidget * parent = 0);
   ~StepByStepWindow();
 
@@ -26,6 +26,7 @@ public:
 
 private slots:
   void btn_next_pressed(const bool update = true);
+  void btn_open_results_pressed();
 
 private:
   Ui::StepByStepWindow * ui;
