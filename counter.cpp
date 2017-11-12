@@ -73,6 +73,9 @@ double Counter::get_rejection_probability(index_t i) const
 double Counter::get_waiting_dispersion(index_t i) const
 {
   unsigned total   = total_[i];
+  if (total == 0)
+    return 0.0;
+
   double   average = in_buffer_time_[i] / total;
 
   return ((in_buffer_time_pow_[i] / total) - (average * average));
@@ -81,6 +84,9 @@ double Counter::get_waiting_dispersion(index_t i) const
 double Counter::get_service_dispersion(index_t i) const
 {
   unsigned total   = total_[i];
+  if (total == 0)
+    return 0.0;
+
   double   average = service_time_[i] / total;
 
   return ((service_time_pow_[i] / total) - (average * average));

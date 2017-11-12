@@ -63,8 +63,8 @@ void ResultsWindow::show_data()
     QString t_waiting   = QString::number(t_waiting_all.at(i), 'f', PRECISION);
     QString t_service   = QString::number(t_service_all.at(i), 'f', PRECISION);
 
-    QString d_waiting = QString::number(d_waiting_all.at(i), 'f', PRECISION);
-    QString d_service = QString::number(d_service_all.at(i), 'f', PRECISION);
+    QString d_waiting = QString::number(d_waiting_all.at(i), 'g', PRECISION);
+    QString d_service = QString::number(d_service_all.at(i), 'g', PRECISION);
 
     ui->tblRejection->setItem(i, 0, new QTableWidgetItem(n_total));
     ui->tblRejection->setItem(i, 1, new QTableWidgetItem(n_rejected));
