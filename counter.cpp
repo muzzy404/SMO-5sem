@@ -64,7 +64,10 @@ unsigned Counter::rejected() const
 
 double Counter::get_rejection_probability(index_t i) const
 {
-  return 100 * ((double)rejected_[i] / total_[i]);
+  if (total_.at(i) != 0)
+    return 100 * ((double)rejected_[i] / total_[i]);
+
+  return 0.0;
 }
 
 double Counter::get_waiting_dispersion(index_t i) const
