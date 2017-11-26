@@ -2,6 +2,7 @@
 #include "ui_resultswindow.h"
 
 #include <QString>
+#include <QFont>
 
 ResultsWindow::ResultsWindow(const System_ptr & system,
                              QWidget * parent) :
@@ -78,6 +79,30 @@ void ResultsWindow::show_data()
     ui->tblDispersion->setItem(i, 1, new QTableWidgetItem(d_service));
   }
 
+  // average time
+  System::time_t in_sys_average  = 0.0;
+  System::time_t waiting_average = 0.0;
+  System::time_t service_average = 0.0;
+  for(int i = 0; i < sources_rows; ++i) {
+    in_sys_average  += t_in_system_all.at(i);
+    waiting_average += t_waiting_all.at(i);
+    service_average += t_service_all.at(i);
+  }
+  if (in_sys_average != 0.0)
+    in_sys_average /= sources_rows;
+  if (waiting_average != 0.0)
+    waiting_average /= sources_rows;
+  if (service_average != 0.0)
+    service_average /= sources_rows;
+
+  ui->lblInSysAvField->setText(QString::number(in_sys_average, 'f', PRECISION));
+  ui->lblWaitingAvField->setText(QString::number(waiting_average, 'f', PRECISION));
+  ui->lblServiceAvField->setText(QString::number(service_average, 'f', PRECISION));
+
+  // average rejection
+  QString average_rejection = QString::number(system_->average_rejection(), 'f', 2) + "%";
+  ui->lblAverageRejField->setText(average_rejection);
+
   const int consumers_rows = t_working_all.size();
   ui->tblConsumers->setRowCount(consumers_rows);
 
@@ -88,4 +113,13 @@ void ResultsWindow::show_data()
     ui->tblConsumers->setItem(i, 0, new QTableWidgetItem(t_working));
     ui->tblConsumers->setItem(i, 1, new QTableWidgetItem(c_working));
   }
+
+  // avearage coefficient
+  double sum_coeff = 0.0;
+  for(const auto value : c_working_all) {
+    sum_coeff += value;
+  }
+  ui->lblAverageCoefficientField->setText(QString::number(
+                                         (sum_coeff / c_working_all.size()), 'f', PRECISION));
+
 }

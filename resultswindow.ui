@@ -28,6 +28,87 @@
      <property name="verticalSpacing">
       <number>6</number>
      </property>
+     <item row="2" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="lblRealisationTime">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Realisation time</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lblRealisationTimeField">
+         <property name="text">
+          <string>0.0</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="3" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLabel" name="lblAverageCoefficient">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Average coefficient</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lblAverageCoefficientField">
+         <property name="text">
+          <string>0.0</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="3" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLabel" name="lblAverageRej">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Average rejection</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lblAverageRejField">
+         <property name="text">
+          <string>0.0</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
      <item row="0" column="0">
       <widget class="QLabel" name="lblSrc">
        <property name="frameShape">
@@ -44,7 +125,7 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="0">
+     <item row="6" column="0">
       <widget class="QTableWidget" name="tblTime">
        <column>
         <property name="text">
@@ -73,7 +154,17 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="0" column="1">
+      <widget class="QLabel" name="lblCnmrs">
+       <property name="text">
+        <string>Consumers</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
       <widget class="QTableWidget" name="tblRejection">
        <property name="sortingEnabled">
         <bool>false</bool>
@@ -98,16 +189,6 @@
        </column>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLabel" name="lblCnmrs">
-       <property name="text">
-        <string>Consumers</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="1">
       <widget class="Line" name="line_3">
        <property name="frameShadow">
@@ -118,7 +199,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1" rowspan="5">
+     <item row="4" column="1" rowspan="6">
       <widget class="QTableWidget" name="tblConsumers">
        <column>
         <property name="text">
@@ -132,7 +213,14 @@
        </column>
       </widget>
      </item>
-     <item row="7" column="0">
+     <item row="5" column="0">
+      <widget class="QLabel" name="lblTime">
+       <property name="text">
+        <string>Average time</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
       <widget class="QTableWidget" name="tblDispersion">
        <column>
         <property name="text">
@@ -156,24 +244,17 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="lblTime">
-       <property name="text">
-        <string>Average time</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="0">
+     <item row="8" column="0">
       <widget class="QLabel" name="lblDispersion">
        <property name="text">
         <string>Dispersion</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout">
+     <item row="7" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
-        <widget class="QLabel" name="lblRealisationTime">
+        <widget class="QLabel" name="lblInSysAvField">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -181,17 +262,42 @@
           </font>
          </property>
          <property name="text">
-          <string>Realisation time</string>
+          <string>10.10</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="lblRealisationTimeField">
+        <widget class="QLabel" name="lblWaitingAvField">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="text">
-          <string>0.0</string>
+          <string>11.11</string>
          </property>
          <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lblServiceAvField">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>01.01</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>

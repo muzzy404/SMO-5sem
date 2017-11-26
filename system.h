@@ -34,8 +34,9 @@ public:
   statistics_num get_rejected_requests() const { return counter_->statistics_rejected();  }
   statistics_num get_total_processed()   const { return counter_->statistics_processed(); }
 
+  typedef Counter::time_t          time_t;
   typedef std::vector<double>      statistics_t;
-  typedef Counter::statistics_time times_t;
+  typedef Counter::statistics_time statistics_time_t;
 
   // getters for results
   Counter::time_t get_realisation_time() const;
@@ -46,10 +47,10 @@ public:
   statistics_t waiting_dispersion()    const { return waiting_dispersion_; }
   statistics_t service_dispersion()    const { return service_dispersion_; }
 
-  times_t times_in_system() const { return counter_->statistics_in_system_time(); }
-  times_t times_waiting() const { return counter_->statistics_waiting_time(); }
-  times_t times_service() const { return counter_->statistics_service_time(); }
-  times_t times_working() const { return counter_->statistics_working_time(); }
+  statistics_time_t times_in_system() const { return counter_->statistics_in_system_time(); }
+  statistics_time_t times_waiting() const { return counter_->statistics_waiting_time(); }
+  statistics_time_t times_service() const { return counter_->statistics_service_time(); }
+  statistics_time_t times_working() const { return counter_->statistics_working_time(); }
 
   unsigned total_reqs_num()     const { return counter_->total();     }
   unsigned processed_reqs_num() const { return counter_->processed(); }
@@ -64,6 +65,8 @@ public:
   bool step_by_step_mode() const { return step_by_step_mode_; }
   std::string get_status() const { return status_; }
   unsigned get_max_requests() const { return max_requests_; }
+
+  double average_rejection() const { return counter_->get_rejection_probability(); }
 
 private:
   typedef std::vector<Source>   Sources;

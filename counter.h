@@ -39,6 +39,7 @@ public:
   statistics_num statistics_rejected()  const { return rejected_;  }
   statistics_num statistics_processed() const { return processed_; }
 
+  double get_rejection_probability()          const;
   double get_rejection_probability(index_t i) const;
   double get_waiting_dispersion(index_t i)    const;
   double get_service_dispersion(index_t i)    const;

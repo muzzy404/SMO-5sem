@@ -70,6 +70,22 @@ double Counter::get_rejection_probability(index_t i) const
   return 0.0;
 }
 
+double Counter::get_rejection_probability() const
+{
+  int    i   = 0;
+  double sum = 0.0;
+
+  for(const int rejected : rejected_) {
+    if (total_.at(i) != 0) {
+      sum += 100 * ((double)rejected / total_[i]);
+    }
+    ++i;
+  }
+
+  return (sum / rejected_.size());
+}
+
+
 double Counter::get_waiting_dispersion(index_t i) const
 {
   unsigned total   = total_[i];
