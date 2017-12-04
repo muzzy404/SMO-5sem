@@ -92,6 +92,10 @@ void StepByStepWindow::btn_open_results_pressed()
 
 void StepByStepWindow::update_visible_data()
 {
+  if (!system_->step_by_step_mode()) {
+    ui->btnNext->setEnabled(false);
+  }
+
   System::devices_state_t sources = system_->get_sources_state();
   System::statistics_num all_total    = system_->get_total_requests();
   System::statistics_num all_rejected = system_->get_rejected_requests();
