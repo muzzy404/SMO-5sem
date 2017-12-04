@@ -1,6 +1,7 @@
 #include "counter.h"
 
 #include <algorithm>
+#include <cmath> // abs
 
 Counter::Counter(index_t sources_num, index_t consumers_num)
 {
@@ -88,29 +89,43 @@ double Counter::get_rejection_probability() const
 
 double Counter::get_waiting_dispersion(index_t i) const
 {
-  unsigned total   = total_[i];
+  unsigned total = total_[i];
   if (total == 0)
     return 0.0;
 
-  double   average = in_buffer_time_[i] / total;
+  double average = in_buffer_time_[i] / total;
 
-  return ((in_buffer_time_pow_[i] / total) - (average * average));
+  return std::sqrt(std::abs((in_buffer_time_pow_[i] / total) - (average * average)));
 }
 
 double Counter::get_service_dispersion(index_t i) const
 {
-  unsigned total   = total_[i];
+  unsigned total = total_[i];
   if (total == 0)
     return 0.0;
 
-  double   average = service_time_[i] / total;
+  double average = service_time_[i] / total;
 
-  return ((service_time_pow_[i] / total) - (average * average));
+  return std::sqrt(std::abs((service_time_pow_[i] / total) - (average * average)));
 }
 
 Counter::time_t Counter::get_waiting_time(index_t i) const
 {
-  return (in_buffer_time_[i] / total_[i]);
+  auto time = (in_buffer_time_[i] / total_[i]);
+  return time;
+}
+
+Counter::statistics_time Counter::statistics_waiting_time() const
+{
+  statistics_time average_time;
+
+  unsigned i = 0;
+  for(const auto time : in_buffer_time_) {
+    average_time.push_back(time / total_.at(i));
+    ++i;
+  }
+
+  return average_time;
 }
 
 Counter::time_t Counter::get_service_time(index_t i) const
@@ -118,9 +133,35 @@ Counter::time_t Counter::get_service_time(index_t i) const
   return (service_time_[i] / total_[i]);
 }
 
+Counter::statistics_time Counter::statistics_service_time() const
+{
+  statistics_time average_time;
+
+  unsigned i = 0;
+  for(const auto time : service_time_) {
+    average_time.push_back(time / total_.at(i));
+    ++i;
+  }
+
+  return average_time;
+}
+
 Counter::time_t Counter::get_in_system_time(index_t i) const
 {
   return (in_system_time_[i] / total_[i]);
+}
+
+Counter::statistics_time Counter::statistics_in_system_time() const
+{
+  statistics_time average_time;
+
+  unsigned i = 0;
+  for(const auto time : in_system_time_) {
+    average_time.push_back(time / total_.at(i));
+    ++i;
+  }
+
+  return average_time;
 }
 
 double Counter::count_consumers_coeff(const index_t i,

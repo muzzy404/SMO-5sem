@@ -49,6 +49,18 @@ void StepByStepWindow::start()
   if (!system_->step_by_step_mode()) {
     while (!system_->finished()) {
 
+//      msg for error
+
+//      auto index = system_->get_sources_num() - 1;
+//      auto time = system_->times_waiting().at(index);
+//      auto realisation = system_->get_realisation_time();
+//      if (realisation < time) {
+//        QMessageBox error;
+//        error.setText("Realisation: " + QString::number(realisation) +
+//                      "\nWaiting: " + QString::number(time));
+//        error.exec();
+//      }
+
       // limit for visual updating
       if (system_->get_max_requests() > lim_for_updates) {
         int progress = system_->get_progress();

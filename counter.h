@@ -47,10 +47,10 @@ public:
   time_t get_waiting_time(index_t i)   const;
   time_t get_service_time(index_t i)   const;
   time_t get_in_system_time(index_t i) const;
-  statistics_time statistics_service_time()   const { return service_time_; }
+  statistics_time statistics_service_time()   const;// { return service_time_; }
   statistics_time statistics_working_time()   const { return working_time_; }
-  statistics_time statistics_waiting_time()   const { return in_buffer_time_; }
-  statistics_time statistics_in_system_time() const { return in_system_time_; }
+  statistics_time statistics_waiting_time()   const;// { return in_buffer_time_; }
+  statistics_time statistics_in_system_time() const;// { return in_system_time_; }
 
   double count_consumers_coeff(const index_t i,
                                const time_t realisation_time) const;
