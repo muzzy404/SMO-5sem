@@ -247,7 +247,7 @@
      <item row="8" column="0">
       <widget class="QLabel" name="lblDispersion">
        <property name="text">
-        <string>Dispersion</string>
+        <string>Dispersion (standard deviation)</string>
        </property>
       </widget>
      </item>
