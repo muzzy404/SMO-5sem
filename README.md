@@ -1,6 +1,9 @@
 # Queueing theory system project
 __The coursework, SPbPU 5th semester__
 
+- C++
+- Qt Creator
+
 __*Variant 3*__
 
 | feature                     | type        | description                                                                         |
