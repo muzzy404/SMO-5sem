@@ -15,9 +15,9 @@ __*Variant 3*__
 | __*enqueue*__               |                        |                                                                   |
 | enqueue policy (buffering)  | first empty place      | query goes to first empty place in buffer                         |
 | rejection policy            | in case of full buffer | query goes out of system - if there are no empty places in buffer |
-| __*dequeue*__               |                                                             |                                      |
-| consumer                    | selecton by priority (higher first)                         | consumer priority - its index number |
-| query/request               | selecton by priority (higher first) and time (oldest first) | query priority - its producer priority, if few queries have the same priority - the oldest one will be selected |
+| __*dequeue*__               |                                                              |                                      |
+| consumer                    | selection by priority (higher first)                         | consumer priority - its index number |
+| query/request               | selection by priority (higher first) and time (oldest first) | query priority - its producer priority, if few queries have the same priority - the oldest one will be selected |
 | __*process/results*__       |                                   |   |
 | automatic                   | summary results table             | - |
 | step by step                | user sees each step of system job | - |
