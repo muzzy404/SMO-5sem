@@ -14,32 +14,33 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += main.cpp \
-    source.cpp \
-    request.cpp \
-    buffer.cpp \
-    counter.cpp \
-    consumer.cpp \
-    constants.cpp \
-    mainwindow.cpp \
-    system.cpp \
-    stepbystepwindow.cpp \
-    resultswindow.cpp
+SOURCES += \
+    src\main.cpp \
+    src\source.cpp \
+    src\request.cpp \
+    src\buffer.cpp \
+    src\counter.cpp \
+    src\consumer.cpp \
+    src\constants.cpp \
+    src\mainwindow.cpp \
+    src\system.cpp \
+    src\stepbystepwindow.cpp \
+    src\resultswindow.cpp
 
 HEADERS += \
-    constants.h \
-    source.h \
-    request.h \
-    buffer.h \
-    counter.h \
-    consumer.h \
-    device.h \
-    mainwindow.h \
-    system.h \
-    stepbystepwindow.h \
-    resultswindow.h
+    include\constants.h \
+    include\source.h \
+    include\request.h \
+    include\buffer.h \
+    include\counter.h \
+    include\consumer.h \
+    include\device.h \
+    include\mainwindow.h \
+    include\system.h \
+    include\stepbystepwindow.h \
+    include\resultswindow.h
 
 FORMS += \
-    mainwindow.ui \
-    stepbystepwindow.ui \
-    resultswindow.ui
+    gui\mainwindow.ui \
+    gui\stepbystepwindow.ui \
+    gui\resultswindow.ui
